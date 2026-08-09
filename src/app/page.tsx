@@ -1669,9 +1669,9 @@ export default function Home() {
       </section>
 
       {/* ============================================================
-          FOOTER
+          FOOTER (SEO Sitelinks)
           ============================================================ */}
-      <footer className="footer" style={{ padding: '60px 0 32px' }}>
+      <footer className="footer" style={{ padding: '60px 0 32px', background: '#0a0a0a', color: '#fff' }}>
         <div className="container">
           <div className="mobile-stack" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: '48px', marginBottom: '48px' }}>
             {/* Brand */}
@@ -1682,31 +1682,46 @@ export default function Home() {
                 </div>
                 <span style={{ fontWeight: 900, fontSize: '1.2rem', color: '#fff', letterSpacing: '-1px' }}>Gigzo</span>
               </div>
-              <p style={{ fontSize: '0.88rem', lineHeight: 1.7, maxWidth: '260px' }}>
+              <p style={{ fontSize: '0.88rem', lineHeight: 1.7, maxWidth: '260px', color: 'rgba(255,255,255,0.7)' }}>
                 India's fastest link-in-bio commerce platform. Built for Indian creators, powered by UPI.
               </p>
               <div style={{ display: 'flex', gap: '12px', marginTop: '20px' }}>
-                <a href="#" style={{ color: 'rgba(255,255,255,0.5)', transition: 'color 0.2s' }}>
+                <a href="https://instagram.com/profitupx" target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.5)', transition: 'color 0.2s' }}>
                   <IconInstagram />
                 </a>
               </div>
             </div>
 
             {[
-              { title: 'Product', links: ['Features', 'How It Works', 'Changelog'] },
-              { title: 'Company', links: ['About', 'Blog', 'Careers', 'Contact'] },
-              { title: 'Legal', links: ['Privacy Policy', 'Terms of Service', 'Refund Policy'] },
+              { title: 'Product', links: [
+                { label: 'Features', href: '/#features' },
+                { label: 'Pricing', href: '/pricing' },
+                { label: 'How It Works', href: '/#how-it-works' },
+                { label: 'Login', href: '/auth/login' },
+                { label: 'Sign Up Free', href: '/auth/login' }
+              ]},
+              { title: 'Company', links: [
+                { label: 'About ProfitupX', href: 'https://profitupx.com' },
+                { label: 'Blog (Coming Soon)', href: '/blog' },
+                { label: 'Careers (Coming Soon)', href: '/careers' },
+                { label: 'Contact Us', href: '/contact' }
+              ]},
+              { title: 'Legal', links: [
+                { label: 'Privacy Policy', href: '/privacy' },
+                { label: 'Terms of Service', href: '/terms' },
+                { label: 'Refund Policy', href: '/refund' }
+              ]},
             ].map(col => (
               <div key={col.title}>
                 <div style={{ fontWeight: 800, color: '#fff', marginBottom: '16px', fontSize: '0.88rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{col.title}</div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                   {col.links.map(l => (
-                    <a key={l} href="#" style={{ fontSize: '0.88rem', transition: 'color 0.2s' }}
+                    <Link key={l.label} href={l.href} style={{ fontSize: '0.88rem', color: 'rgba(255,255,255,0.7)', textDecoration: 'none', transition: 'color 0.2s' }}
                       onMouseEnter={e => { (e.target as HTMLElement).style.color = '#fff'; }}
-                      onMouseLeave={e => { (e.target as HTMLElement).style.color = ''; }}
+                      onMouseLeave={e => { (e.target as HTMLElement).style.color = 'rgba(255,255,255,0.7)'; }}
                     >
-                      {l}
-                    </a>
+                      {l.label}
+                    </Link>
                   ))}
                 </div>
               </div>
@@ -1722,8 +1737,8 @@ export default function Home() {
             flexWrap: 'wrap',
             gap: '16px',
           }}>
-            <p style={{ fontSize: '0.82rem', display: 'flex', alignItems: 'center', gap: '4px' }}>© 2026 Gigzo powered by ProfitupX. Made with <Heart size={14} className="text-red-500" fill="currentColor" /> in India</p>
-            <p style={{ fontSize: '0.82rem' }}>Empowering creators to monetize their passion.</p>
+            <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.7)', display: 'flex', alignItems: 'center', gap: '4px' }}>© 2026 Gigzo powered by ProfitupX. Made with <Heart size={14} className="text-red-500" fill="currentColor" /> in India</p>
+            <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.7)' }}>Empowering creators to monetize their passion.</p>
           </div>
         </div>
       </footer>
