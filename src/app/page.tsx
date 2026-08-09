@@ -541,26 +541,37 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu (Trending Floating Island) */}
       {mobileOpen && (
-        <div style={{
-          position: 'fixed', top: 68, left: 0, right: 0, zIndex: 999,
-          background: '#fff', borderBottom: '1px solid var(--border)',
-          padding: '16px 24px 24px', display: 'flex', flexDirection: 'column', gap: '4px',
-          boxShadow: '0 12px 40px rgba(0,0,0,0.1)',
-        }}>
-          {navLinks.map(l => (
-            <a key={l.href} href={l.href} onClick={() => setMobileOpen(false)} style={{
-              fontWeight: 600, fontSize: '1.05rem', padding: '12px 16px',
-              borderRadius: 12, color: 'var(--text-secondary)',
+        <>
+          <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.2)', backdropFilter: 'blur(4px)', zIndex: 998 }} onClick={() => setMobileOpen(false)} />
+          <motion.div
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            style={{
+              position: 'fixed', top: 84, left: 20, right: 20, zIndex: 999,
+              background: 'rgba(255, 255, 255, 0.95)', backdropFilter: 'blur(24px)',
+              border: '1px solid rgba(255,255,255,0.4)', borderRadius: '32px',
+              padding: '24px', display: 'flex', flexDirection: 'column', gap: '8px',
+              boxShadow: '0 32px 64px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.05)',
             }}>
-              {l.label}
-            </a>
-          ))}
-          <Link href="/auth/login" className="btn-primary mobile-menu-start-btn" style={{ marginTop: '12px', width: '100%', justifyContent: 'center' }}>
-            Start for Free
-          </Link>
-        </div>
+            {navLinks.map(l => (
+              <a key={l.href} href={l.href} onClick={() => setMobileOpen(false)} style={{
+                fontWeight: 700, fontSize: '1.1rem', padding: '14px 16px',
+                borderRadius: '16px', color: '#0a0a0a', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                background: 'var(--surface-2)'
+              }}>
+                {l.label}
+                <IconArrow />
+              </a>
+            ))}
+            <div style={{ height: '1px', background: 'var(--border)', margin: '8px 0' }} />
+            <Link href="/auth/login" className="btn-primary" style={{ marginTop: '4px', width: '100%', justifyContent: 'center', padding: '14px', borderRadius: '100px', fontSize: '1rem' }} onClick={() => setMobileOpen(false)}>
+              Get Started
+            </Link>
+          </motion.div>
+        </>
       )}
 
       {/* ============================================================
@@ -1748,7 +1759,7 @@ export default function Home() {
             gap: 16px !important;
           }
           .hero-bento-grid > div {
-            min-height: 220px !important;
+            height: 250px !important;
             margin-top: 0 !important;
             grid-row: auto !important;
             grid-column: 1 / -1 !important;
