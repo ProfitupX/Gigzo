@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import CheckoutModal from './CheckoutModal';
-import { ShoppingBag, Zap, Check, ShieldCheck, Truck, RefreshCw } from 'lucide-react';
+import { ShoppingBag, Heart } from 'lucide-react';
 
 export default function ProductInteractions({ 
   product, 
@@ -12,14 +12,7 @@ export default function ProductInteractions({
   variants: string[] 
 }) {
   const [selectedVariant, setSelectedVariant] = useState<string | null>(variants.length > 0 ? variants[0] : null);
-  const [added, setAdded] = useState(false);
   const [showCheckout, setShowCheckout] = useState(false);
-
-  const handleAddToCart = () => {
-    if (product.stock === 0 && product.is_physical) return;
-    setAdded(true);
-    setTimeout(() => setAdded(false), 2500);
-  };
 
   const handleBuyNow = () => {
     if (product.stock === 0 && product.is_physical) return;
@@ -27,109 +20,95 @@ export default function ProductInteractions({
   };
 
   return (
-    <div>
-      {/* Variations Selector */}
-      {variants.length > 0 && (
-        <div style={{ marginBottom: '32px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-            <span style={{ fontWeight: 800, fontSize: '0.95rem', color: 'var(--foreground)' }}>Select Variant</span>
-          </div>
-          <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+    <>
+      <div style={{
+        position: 'fixed',
+        bottom: 0,
+        left: 0,
+        width: '100%',
+        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+        backdropFilter: 'blur(20px)',
+        borderTop: '1px solid rgba(0,0,0,0.08)',
+        padding: '16px 20px',
+        paddingBottom: 'max(16px, env(safe-area-inset-bottom))',
+        zIndex: 50,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '16px',
+        boxShadow: '0 -10px 40px rgba(0,0,0,0.08)'
+      }}>
+        
+        {/* Variations Row */}
+        {variants.length > 0 && (
+          <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', paddingBottom: '4px', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}>
             {variants.map(variant => (
               <button 
                 key={variant}
                 type="button"
                 onClick={() => setSelectedVariant(variant)}
                 style={{
-                  padding: '10px 18px',
+                  minWidth: '48px',
+                  height: '48px',
+                  padding: '0 16px',
                   backgroundColor: selectedVariant === variant ? '#0a0a0a' : '#fff',
                   color: selectedVariant === variant ? '#fff' : '#0a0a0a',
-                  border: `2px solid ${selectedVariant === variant ? '#0a0a0a' : 'var(--border)'}`,
-                  borderRadius: '14px',
+                  border: `1px solid ${selectedVariant === variant ? '#0a0a0a' : 'var(--border)'}`,
+                  borderRadius: '100px',
                   fontWeight: 700,
-                  fontSize: '0.9rem',
+                  fontSize: '0.85rem',
                   cursor: 'pointer',
-                  transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
-                  boxShadow: selectedVariant === variant ? '0 4px 12px rgba(0,0,0,0.1)' : 'none'
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'all 0.2s',
+                  flexShrink: 0
                 }}
               >
                 {variant}
               </button>
             ))}
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Action Buttons */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-        <button 
-          type="button"
-          onClick={handleBuyNow}
-          disabled={product.stock === 0 && product.is_physical}
-          className="btn-lime"
-          style={{ 
-            width: '100%', 
-            padding: '18px', 
-            fontSize: '1.05rem', 
-            fontWeight: 900, 
-            borderRadius: '100px',
-            cursor: (product.stock === 0 && product.is_physical) ? 'not-allowed' : 'pointer',
-            opacity: (product.stock === 0 && product.is_physical) ? 0.5 : 1,
-            display: 'flex', 
-            justifyContent: 'center', 
-            alignItems: 'center', 
-            gap: '10px',
-            boxShadow: '0 8px 24px rgba(200, 241, 53, 0.35)'
-          }}
-        >
-          <Zap size={20} />
-          <span>{product.is_physical && product.stock === 0 ? 'Sold Out' : 'Buy Now — Express Checkout'}</span>
-        </button>
-
-        <button 
-          type="button"
-          onClick={handleAddToCart}
-          disabled={product.stock === 0 && product.is_physical}
-          className="btn-secondary"
-          style={{ 
-            width: '100%', 
-            padding: '16px', 
-            fontSize: '0.95rem', 
-            fontWeight: 800, 
-            borderRadius: '100px',
-            cursor: (product.stock === 0 && product.is_physical) ? 'not-allowed' : 'pointer',
-            opacity: (product.stock === 0 && product.is_physical) ? 0.5 : 1,
-            display: 'flex', 
-            justifyContent: 'center', 
-            alignItems: 'center', 
-            gap: '10px'
-          }}
-        >
-          {added ? <Check size={18} style={{ color: '#16a34a' }} /> : <ShoppingBag size={18} />}
-          <span>{added ? 'Added to Cart' : 'Add to Bag'}</span>
-        </button>
-      </div>
-
-      {/* Trust Guarantee Bar */}
-      <div style={{ marginTop: '24px', padding: '16px', backgroundColor: 'var(--surface-2)', borderRadius: '16px', border: '1px solid var(--border)', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.78rem', color: 'var(--text-secondary)', fontWeight: 600 }}>
-          <ShieldCheck size={16} style={{ color: '#16a34a', flexShrink: 0 }} />
-          <span>Verified Creator Store</span>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.78rem', color: 'var(--text-secondary)', fontWeight: 600 }}>
-          <Truck size={16} style={{ color: '#0284c7', flexShrink: 0 }} />
-          <span>UPI / COD Supported</span>
+        {/* Action Row */}
+        <div style={{ display: 'flex', gap: '12px' }}>
+          <button style={{ width: '56px', height: '56px', borderRadius: '100px', backgroundColor: '#fff', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <Heart size={22} />
+          </button>
+          <button 
+            type="button"
+            onClick={handleBuyNow}
+            disabled={product.stock === 0 && product.is_physical}
+            style={{ 
+              flex: 1, 
+              height: '56px', 
+              fontSize: '1.05rem', 
+              fontWeight: 800, 
+              borderRadius: '100px',
+              backgroundColor: '#0a0a0a',
+              color: '#fff',
+              border: 'none',
+              cursor: (product.stock === 0 && product.is_physical) ? 'not-allowed' : 'pointer',
+              opacity: (product.stock === 0 && product.is_physical) ? 0.5 : 1,
+              display: 'flex', 
+              justifyContent: 'center', 
+              alignItems: 'center', 
+              gap: '10px'
+            }}
+          >
+            <ShoppingBag size={20} />
+            <span>{product.is_physical && product.stock === 0 ? 'Sold Out' : 'Add to Bag'}</span>
+          </button>
         </div>
       </div>
 
-      {/* Checkout Modal Trigger */}
       {showCheckout && (
         <CheckoutModal 
           product={product} 
-          selectedVariant={selectedVariant} 
+          selectedVariant={selectedVariant}
           onClose={() => setShowCheckout(false)} 
         />
       )}
-    </div>
+    </>
   );
 }
