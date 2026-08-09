@@ -14,13 +14,17 @@ import {
   CheckCircle,
   AlertCircle,
   Truck,
-  Image as ImageIcon
+  Image as ImageIcon,
+  Edit2,
+  Trash2,
+  X
 } from 'lucide-react';
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [adding, setAdding] = useState(false);
+  const [editingProductId, setEditingProductId] = useState<string | null>(null);
   
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -61,6 +65,44 @@ export default function ProductsPage() {
     fetchProductsAndCategories();
   }, []);
 
+  const handleEditClick = (product: any) => {
+    setEditingProductId(product.id);
+    setTitle(product.title || '');
+    setDescription(product.description || '');
+    setPrice(product.price?.toString() || '');
+    setCategory(product.category || 'General');
+    setIsPhysical(product.is_physical ?? true);
+    setStock(product.stock?.toString() || '10');
+    setShippingFee(product.shipping_fee?.toString() || '0');
+    setShippingDays(product.shipping_days || '3-5 Days');
+    setVariants(product.variants || '');
+    setFiles([]); // Note: Existing images are kept in DB unless overwritten
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const cancelEdit = () => {
+    setEditingProductId(null);
+    setTitle('');
+    setDescription('');
+    setPrice('');
+    setVariants('');
+    setFiles([]);
+    setStock('10');
+    setShippingFee('0');
+    setShippingDays('3-5 Days');
+  };
+
+  const handleDeleteProduct = async (id: string) => {
+    if (!confirm('Are you sure you want to delete this product?')) return;
+    
+    const { error } = await supabase.from('products').delete().eq('id', id);
+    if (error) {
+      alert('Error deleting product: ' + error.message);
+    } else {
+      fetchProductsAndCategories();
+    }
+  };
+
   const handleAddProduct = async (e: React.FormEvent) => {
     e.preventDefault();
     setAdding(true);
@@ -98,35 +140,46 @@ export default function ProductsPage() {
       setUploadingImage(false);
     }
     
-    // Insert into database
-    const { error } = await supabase.from('products').insert({
+    // Insert or Update database
+    const productData: any = {
       creator_id: user.id,
       title,
       description,
       price: parseFloat(price),
-      image_url: imageUrl,
-      additional_images: additionalImages,
       category: category,
       is_physical: isPhysical,
       stock: isPhysical ? parseInt(stock, 10) : 0,
       shipping_fee: isPhysical ? parseFloat(shippingFee) : 0,
       shipping_days: isPhysical ? shippingDays : null,
       variants: variants.trim() || null
-    });
+    };
+
+    // Only update image fields if new images were uploaded
+    if (imageUrl) {
+      productData.image_url = imageUrl;
+      productData.additional_images = additionalImages;
+    }
+
+    let error;
+    if (editingProductId) {
+      const { error: updateError } = await supabase
+        .from('products')
+        .update(productData)
+        .eq('id', editingProductId);
+      error = updateError;
+    } else {
+      const { error: insertError } = await supabase
+        .from('products')
+        .insert(productData);
+      error = insertError;
+    }
     
     setAdding(false);
     
     if (error) {
-      alert("Error saving product: " + error.message);
+      alert(`Error ${editingProductId ? 'updating' : 'saving'} product: ` + error.message);
     } else {
-      setTitle('');
-      setDescription('');
-      setPrice('');
-      setVariants('');
-      setFiles([]);
-      setStock('10');
-      setShippingFee('0');
-      setShippingDays('3-5 Days');
+      cancelEdit();
       fetchProductsAndCategories();
     }
   };
@@ -140,13 +193,22 @@ export default function ProductsPage() {
         </div>
       </div>
 
-      {/* Add Product Form */}
+      {/* Add/Edit Product Form */}
       <div className="card" style={{ padding: '32px', borderRadius: '24px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '24px' }}>
-          <div style={{ width: 36, height: 36, borderRadius: 10, backgroundColor: 'var(--surface-2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--foreground)' }}>
-            <Plus size={20} />
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div style={{ width: 36, height: 36, borderRadius: 10, backgroundColor: 'var(--surface-2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--foreground)' }}>
+              {editingProductId ? <Edit2 size={20} /> : <Plus size={20} />}
+            </div>
+            <h2 style={{ fontSize: '1.2rem', fontWeight: 800, letterSpacing: '-0.02em' }}>
+              {editingProductId ? 'Edit Product' : 'Add New Product'}
+            </h2>
           </div>
-          <h2 style={{ fontSize: '1.2rem', fontWeight: 800, letterSpacing: '-0.02em' }}>Add New Product</h2>
+          {editingProductId && (
+            <button type="button" onClick={cancelEdit} className="btn-secondary" style={{ padding: '8px 16px', borderRadius: '100px', fontSize: '0.85rem', gap: '6px' }}>
+              <X size={16} /> Cancel
+            </button>
+          )}
         </div>
 
         <form onSubmit={handleAddProduct} style={{ display: 'grid', gap: '20px' }}>
@@ -182,8 +244,13 @@ export default function ProductsPage() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px' }}>
             <div style={{ gridColumn: '1 / -1' }}>
               <label style={{ display: 'block', marginBottom: '8px', fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Product Images (Up to 4)</label>
+              {editingProductId && (
+                <div style={{ marginBottom: '8px', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                  Leave empty to keep existing images. Uploading new images will replace the old ones.
+                </div>
+              )}
               <input 
-                required={files.length === 0}
+                required={!editingProductId && files.length === 0}
                 type="file" 
                 accept="image/*" 
                 multiple 
@@ -244,7 +311,7 @@ export default function ProductsPage() {
 
           <button type="submit" disabled={adding || uploadingImage} className="btn-lime" style={{ justifySelf: 'start', padding: '14px 28px', fontSize: '0.92rem', borderRadius: '100px', gap: '8px' }}>
             <UploadCloud size={18} />
-            <span>{uploadingImage ? 'Uploading Image...' : adding ? 'Publishing...' : 'Publish Product'}</span>
+            <span>{uploadingImage ? 'Uploading Image...' : adding ? (editingProductId ? 'Updating...' : 'Publishing...') : (editingProductId ? 'Update Product' : 'Publish Product')}</span>
           </button>
         </form>
       </div>
@@ -289,11 +356,32 @@ export default function ProductsPage() {
                     ₹{Number(p.price).toLocaleString('en-IN', { minimumFractionDigits: 0 })}
                   </div>
                   {p.category === 'Physical' && (
-                    <div style={{ marginTop: 'auto', fontSize: '0.78rem', color: 'var(--text-secondary)', display: 'flex', justifyContent: 'space-between', backgroundColor: 'var(--surface-2)', padding: '8px 12px', borderRadius: '10px' }}>
+                    <div style={{ marginTop: 'auto', fontSize: '0.78rem', color: 'var(--text-secondary)', display: 'flex', justifyContent: 'space-between', backgroundColor: 'var(--surface-2)', padding: '8px 12px', borderRadius: '10px', marginBottom: '12px' }}>
                       <span style={{ fontWeight: 600 }}>Stock: <span style={{ color: p.stock > 0 ? '#16a34a' : '#dc2626', fontWeight: 800 }}>{p.stock ?? 0}</span></span>
                       <span style={{ fontWeight: 600 }}>Shipping: ₹{p.shipping_fee ?? 0}</span>
                     </div>
                   )}
+                  
+                  {/* Action Buttons */}
+                  <div style={{ display: 'flex', gap: '8px', marginTop: p.category === 'Physical' ? '0' : 'auto' }}>
+                    <button 
+                      onClick={() => handleEditClick(p)} 
+                      className="btn-secondary" 
+                      style={{ flex: 1, padding: '8px', fontSize: '0.8rem', borderRadius: '12px', gap: '6px' }}
+                    >
+                      <Edit2 size={14} /> Edit
+                    </button>
+                    <button 
+                      onClick={() => handleDeleteProduct(p.id)} 
+                      style={{ 
+                        flex: 1, padding: '8px', fontSize: '0.8rem', borderRadius: '12px', 
+                        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
+                        backgroundColor: '#fef2f2', color: '#dc2626', border: '1px solid #fecaca', cursor: 'pointer', fontWeight: 600
+                      }}
+                    >
+                      <Trash2 size={14} /> Delete
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}

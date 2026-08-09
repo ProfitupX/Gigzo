@@ -2,16 +2,16 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, Package, Tag, Star, Settings } from 'lucide-react';
+import { LayoutDashboard, Package, Tag, Star, Settings, ShoppingCart } from 'lucide-react';
 
 export function MobileBottomNav() {
   const pathname = usePathname();
 
   const navItems = [
     { name: 'Home', href: '/dashboard', icon: LayoutDashboard },
+    { name: 'Orders', href: '/dashboard/orders', icon: ShoppingCart },
     { name: 'Products', href: '/dashboard/products', icon: Package },
     { name: 'Categories', href: '/dashboard/categories', icon: Tag },
-    { name: 'Reviews', href: '/dashboard/reviews', icon: Star },
     { name: 'Settings', href: '/dashboard/settings', icon: Settings },
   ];
 
