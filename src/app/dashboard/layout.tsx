@@ -126,10 +126,13 @@ export default async function DashboardLayout({
         </header>
 
         {/* Page Content */}
-        <main style={{ flex: 1, padding: '36px 40px 60px', overflowY: 'auto' }}>
+        <main className="dashboard-main-content-inner" style={{ flex: 1, padding: '36px 40px 60px', overflowY: 'auto' }}>
           {children}
         </main>
       </div>
+
+      {/* Mobile Bottom Nav */}
+      <MobileBottomNav />
     </div>
   );
 }

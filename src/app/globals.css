@@ -674,6 +674,11 @@ h1, h2, h3, h4, h5, h6 {
   pointer-events: none;
 }
 
+/* Hide mobile bottom nav by default on desktop */
+.mobile-bottom-nav {
+  display: none !important;
+}
+
 /* Mobile nav responsive fix */
 @media (max-width: 900px) {
   .desktop-nav-links { display: none !important; }
@@ -708,6 +713,10 @@ h1, h2, h3, h4, h5, h6 {
   
   .dashboard-main-content {
     padding-bottom: 80px !important; /* Room for Bottom Nav */
+  }
+  
+  .dashboard-main-content-inner {
+    padding: 24px 16px 80px !important; /* Overwrite huge desktop padding */
   }
 
   /* Bottom App Navigation Bar (Mobile Only) */
