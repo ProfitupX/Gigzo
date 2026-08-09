@@ -1753,16 +1753,26 @@ export default function Home() {
           }
           
           /* Fix Hero images and grid for mobile */
+          /* Fix Hero images and grid for mobile */
           .hero-bento-grid {
-            grid-template-columns: 1fr !important;
-            grid-template-rows: auto auto auto auto !important;
-            gap: 16px !important;
+            grid-template-columns: 1fr 1fr !important;
+            grid-template-rows: 150px 150px !important;
+            gap: 12px !important;
+            margin-top: 16px;
           }
           .hero-bento-grid > div {
-            height: 250px !important;
+            height: auto !important;
             margin-top: 0 !important;
             grid-row: auto !important;
-            grid-column: 1 / -1 !important;
+            grid-column: auto !important; /* Reset from 1 / -1 */
+          }
+          
+          /* Refine spacing for bento boxes to make them compact and premium */
+          #mobile-app .mobile-stack > div {
+            padding: 28px !important; 
+          }
+          .mobile-stack {
+            gap: 24px !important;
           }
           
           /* Shrink Mobile Menu Button */
