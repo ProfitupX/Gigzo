@@ -79,6 +79,7 @@ export default function CheckoutModal({ product, selectedVariant, onClose }: Che
       shipping_address: isPhysical ? `${address}, PIN: ${pincode}` : null,
       payment_method: 'direct_upi',
       utr_ref: utrRef.trim() || null,
+      selected_variant: selectedVariant || null,
     });
 
     if (error) {

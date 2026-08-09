@@ -132,7 +132,14 @@ export default function OrdersPage() {
                           <Package size={20} style={{ margin: '10px auto', display: 'block', color: 'var(--text-muted)' }} />
                         )}
                       </div>
-                      <div style={{ fontWeight: 700, fontSize: '0.95rem' }}>{order.products?.title || 'Unknown Product'}</div>
+                      <div>
+                        <div style={{ fontWeight: 700, fontSize: '0.95rem' }}>{order.products?.title || 'Unknown Product'}</div>
+                        {order.selected_variant && (
+                          <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '2px', fontWeight: 600 }}>
+                            Variant: {order.selected_variant}
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
 

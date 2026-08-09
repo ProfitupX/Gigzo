@@ -24,8 +24,10 @@ export default function ProductInteractions({
       <div style={{
         position: 'fixed',
         bottom: 0,
-        left: 0,
+        left: '50%',
+        transform: 'translateX(-50%)',
         width: '100%',
+        maxWidth: '500px',
         backgroundColor: 'rgba(255, 255, 255, 0.95)',
         backdropFilter: 'blur(20px)',
         borderTop: '1px solid rgba(0,0,0,0.08)',
@@ -97,7 +99,7 @@ export default function ProductInteractions({
             }}
           >
             <ShoppingBag size={20} />
-            <span>{product.is_physical && product.stock === 0 ? 'Sold Out' : 'Add to Bag'}</span>
+            <span>{product.is_physical && product.stock === 0 ? 'Sold Out' : 'Buy Now'}</span>
           </button>
         </div>
       </div>

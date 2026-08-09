@@ -51,10 +51,20 @@ export default async function ProductPage({ params }: { params: Promise<{ creato
   const variantsList = product.variants ? product.variants.split(',').map((s: string) => s.trim()).filter(Boolean) : [];
 
   return (
-    <div style={{ backgroundColor: '#ffffff', minHeight: '100vh', fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#0a0a0a', position: 'relative' }}>
+    <div style={{ backgroundColor: '#f3f4f6', minHeight: '100vh', display: 'flex', justifyContent: 'center' }}>
+      <div style={{ 
+        backgroundColor: '#ffffff', 
+        minHeight: '100vh', 
+        width: '100%',
+        maxWidth: '500px', 
+        fontFamily: "'Plus Jakarta Sans', sans-serif", 
+        color: '#0a0a0a', 
+        position: 'relative',
+        boxShadow: '0 0 40px rgba(0,0,0,0.05)'
+      }}>
       
       {/* Top Floating Nav overlaying the image */}
-      <div style={{ position: 'fixed', top: 0, left: 0, right: 0, padding: '16px 20px', display: 'flex', justifyContent: 'space-between', zIndex: 10 }}>
+      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, padding: '16px 20px', display: 'flex', justifyContent: 'space-between', zIndex: 10 }}>
         <Link href={`/${creator?.store_link || resolvedParams.creator_id}`} style={{ width: '40px', height: '40px', backgroundColor: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(10px)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0a0a0a', border: '1px solid rgba(0,0,0,0.05)' }}>
           <ArrowLeft size={20} />
         </Link>
@@ -127,6 +137,7 @@ export default async function ProductPage({ params }: { params: Promise<{ creato
       {/* Sticky Bottom Actions (Variants & Checkout) */}
       <ProductInteractions product={product} variants={variantsList} />
       
+      </div>
     </div>
   );
 }

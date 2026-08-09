@@ -41,9 +41,18 @@ export default function StorefrontClient({ creator, products }: StorefrontClient
   });
 
   return (
-    <div style={{ backgroundColor: '#ffffff', minHeight: '100vh', fontFamily: "'Plus Jakarta Sans', sans-serif", paddingBottom: '100px', color: '#0a0a0a', position: 'relative' }}>
-      
-      {/* App Header (ASOS Style) */}
+    <div style={{ backgroundColor: '#f3f4f6', minHeight: '100vh', display: 'flex', justifyContent: 'center' }}>
+      <div style={{ 
+        backgroundColor: '#ffffff', 
+        minHeight: '100vh', 
+        width: '100%', 
+        maxWidth: '500px', /* Mobile app width on laptop */
+        fontFamily: "'Plus Jakarta Sans', sans-serif", 
+        paddingBottom: '100px', 
+        color: '#0a0a0a', 
+        position: 'relative',
+        boxShadow: '0 0 40px rgba(0,0,0,0.05)'
+      }}>
       <div style={{ padding: '16px 20px', position: 'sticky', top: 0, backgroundColor: '#ffffff', zIndex: 50 }}>
         
         {/* Top Row: Brand & Icons */}
@@ -223,21 +232,11 @@ export default function StorefrontClient({ creator, products }: StorefrontClient
           grid-template-columns: repeat(2, 1fr);
           gap: 16px;
         }
-        @media (min-width: 640px) {
-          .asos-product-grid {
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-          }
-        }
-        @media (min-width: 900px) {
-          .asos-product-grid {
-            grid-template-columns: repeat(4, 1fr);
-          }
-        }
         ::-webkit-scrollbar {
           display: none;
         }
       `}</style>
+      </div>
     </div>
   );
 }
