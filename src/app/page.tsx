@@ -557,7 +557,7 @@ export default function Home() {
               {l.label}
             </a>
           ))}
-          <Link href="/auth/login" className="btn-primary" style={{ marginTop: '12px', width: '100%', justifyContent: 'center' }}>
+          <Link href="/auth/login" className="btn-primary mobile-menu-start-btn" style={{ marginTop: '12px', width: '100%', justifyContent: 'center' }}>
             Start for Free
           </Link>
         </div>
@@ -675,6 +675,7 @@ export default function Home() {
 
             {/* Right Column: Organic Bento Shapes */}
             <motion.div 
+              className="hero-bento-grid"
               initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
               style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '220px 220px', gap: '20px', position: 'relative' }}>
               
@@ -1734,6 +1735,30 @@ export default function Home() {
             gap: 32px !important; 
           }
           .pricing-card.featured { transform: scale(1) !important; }
+          
+          /* Fix grid column spans inside mobile-stack */
+          .mobile-stack > div {
+            grid-column: 1 / -1 !important;
+          }
+          
+          /* Fix Hero images and grid for mobile */
+          .hero-bento-grid {
+            grid-template-columns: 1fr !important;
+            grid-template-rows: auto auto auto auto !important;
+            gap: 16px !important;
+          }
+          .hero-bento-grid > div {
+            min-height: 220px !important;
+            margin-top: 0 !important;
+            grid-row: auto !important;
+            grid-column: 1 / -1 !important;
+          }
+          
+          /* Shrink Mobile Menu Button */
+          .mobile-menu-start-btn {
+            padding: 12px 16px !important;
+            font-size: 0.95rem !important;
+          }
         }
 
         @media (max-width: 640px) {
