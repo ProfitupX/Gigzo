@@ -9,8 +9,11 @@ import {
   Tag, 
   Star, 
   Settings,
-  ExternalLink
+  ExternalLink,
+  LogOut
 } from 'lucide-react';
+import { createClient } from '@/lib/supabase/client';
+import { useRouter } from 'next/navigation';
 
 const navItems = [
   { href: '/dashboard', icon: LayoutDashboard, label: 'Overview', exact: true },
@@ -29,6 +32,13 @@ interface SidebarNavProps {
 
 export function SidebarNav({ userName, userAvatar, userRole }: SidebarNavProps) {
   const pathname = usePathname();
+  const router = useRouter();
+  const supabase = createClient();
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    router.push('/auth/login');
+  };
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
@@ -118,6 +128,17 @@ export function SidebarNav({ userName, userAvatar, userRole }: SidebarNavProps) 
             {userRole}
           </p>
         </div>
+        <button 
+          onClick={handleLogout}
+          aria-label="Logout"
+          style={{
+            background: 'none', border: 'none', cursor: 'pointer', padding: '6px', color: 'var(--text-muted)', borderRadius: '8px'
+          }}
+          onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = '#ef4444'; (e.currentTarget as HTMLElement).style.background = '#fee2e2'; }}
+          onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = 'var(--text-muted)'; (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
+        >
+          <LogOut size={18} />
+        </button>
       </div>
     </div>
   );

@@ -191,7 +191,7 @@ export default async function DashboardOverview() {
       </div>
 
       {/* Main Grid Section: Recent Orders & Inventory */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', gap: '24px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '24px' }}>
 
         {/* Recent Orders */}
         <div className="card" style={{ borderRadius: '24px', padding: '28px' }}>

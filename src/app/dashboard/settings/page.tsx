@@ -2,9 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
-import { Link as LinkIcon, Copy, Check, ExternalLink, Save, User, Globe, Store, CheckCircle, Smartphone } from 'lucide-react';
+import { Link as LinkIcon, Copy, Check, ExternalLink, Save, User, Globe, Store, CheckCircle, Smartphone, LogOut } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function SettingsPage() {
+  const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -65,6 +67,11 @@ export default function SettingsPage() {
     } else {
       alert('Store settings updated successfully!');
     }
+  };
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    router.push('/auth/login');
   };
 
   const fullStoreUrl = `${typeof window !== 'undefined' ? window.location.origin : ''}/${storeLink || creatorId}`;
@@ -213,6 +220,24 @@ export default function SettingsPage() {
             </button>
           </form>
         )}
+      </div>
+
+      {/* Danger Zone */}
+      <div className="card" style={{ padding: '32px', borderRadius: '24px', border: '1px solid #fca5a5' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
+          <h2 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#dc2626' }}>Account Actions</h2>
+        </div>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '24px' }}>
+          Sign out of your Gigzo dashboard on this device.
+        </p>
+        <button 
+          onClick={handleLogout}
+          className="btn-secondary" 
+          style={{ padding: '12px 24px', fontSize: '0.92rem', borderRadius: '100px', gap: '8px', color: '#dc2626', borderColor: '#fca5a5', background: '#fef2f2' }}
+        >
+          <LogOut size={18} />
+          <span>Log out</span>
+        </button>
       </div>
     </div>
   );

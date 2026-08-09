@@ -68,21 +68,24 @@ export default function CheckoutModal({ product, selectedVariant, onClose }: Che
     setSubmitting(true);
     const newOrderId = orderId || `ORD_${Math.random().toString(36).substring(2, 9).toUpperCase()}`;
 
-    try {
-      await supabase.from('orders').insert({
-        creator_id: product.creator_id,
-        product_id: product.id,
-        amount: totalPrice,
-        status: 'paid',
-        buyer_name: name,
-        buyer_email: email,
-        buyer_phone: phone,
-        shipping_address: isPhysical ? `${address}, PIN: ${pincode}` : null,
-        payment_method: 'direct_upi',
-        utr_ref: utrRef.trim() || null,
-      });
-    } catch (err) {
-      console.warn('Order recorded');
+    const { error } = await supabase.from('orders').insert({
+      creator_id: product.creator_id,
+      product_id: product.id,
+      amount: totalPrice,
+      status: 'paid',
+      buyer_name: name,
+      buyer_email: email,
+      buyer_phone: phone,
+      shipping_address: isPhysical ? `${address}, PIN: ${pincode}` : null,
+      payment_method: 'direct_upi',
+      utr_ref: utrRef.trim() || null,
+    });
+
+    if (error) {
+      console.error('Order creation failed:', error);
+      alert('Failed to record order: ' + error.message + '\n\n(Hint: Make sure your Supabase "orders" table has a policy allowing anonymous INSERT operations.)');
+      setSubmitting(false);
+      return;
     }
 
     setOrderId(newOrderId);
