@@ -228,7 +228,7 @@ export default function SettingsPage() {
           <h2 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#dc2626' }}>Account Actions</h2>
         </div>
         <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '24px' }}>
-          Sign out of your Gigzo dashboard on this device.
+          Sign out of your ProfitupX dashboard on this device.
         </p>
         <button 
           onClick={handleLogout}

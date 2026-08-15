@@ -147,13 +147,9 @@ export default function Login() {
       }} className="auth-left-panel">
         {/* Logo */}
         <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', textDecoration: 'none', marginBottom: '36px' }}>
-          <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 30L22 10H32L22 30H12Z" fill="#0a0a0a" />
-            <path d="M8 26L14 14H22L16 26H8Z" fill="#0a0a0a" />
-          </svg>
+          <img src="/icon.png" alt="ProfitupX" style={{ width: '28px', height: '28px', borderRadius: '6px' }} />
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <span style={{ fontWeight: 900, fontSize: '1.45rem', letterSpacing: '-1px', fontFamily: 'Plus Jakarta Sans, sans-serif', color: '#0a0a0a', lineHeight: 1 }}>Gigzo</span>
-            <span style={{ fontSize: '0.6rem', fontWeight: 800, color: '#6b7280', marginTop: '2px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Powered by ProfitupX</span>
+            <span style={{ fontWeight: 900, fontSize: '1.45rem', letterSpacing: '-1px', fontFamily: 'Plus Jakarta Sans, sans-serif', color: '#0a0a0a', lineHeight: 1 }}>ProfitupX</span>
           </div>
         </Link>
 
@@ -330,7 +326,7 @@ export default function Login() {
               Start earning<br />today.
             </h1>
             <p style={{ fontSize: '0.9rem', color: '#6b7280', lineHeight: 1.6 }}>
-              Join 250+ Indian creators already selling with Gigzo.
+              Join 250+ Indian creators already selling with ProfitupX.
             </p>
           </div>
 

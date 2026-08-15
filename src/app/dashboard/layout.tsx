@@ -55,19 +55,12 @@ export default async function DashboardLayout({
         zIndex: 20,
       }}>
         {/* Brand Logo */}
-        <Link href="/dashboard" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none', marginBottom: '32px', paddingLeft: '8px' }}>
-          <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 30L22 10H32L22 30H12Z" fill="#0a0a0a" />
-            <path d="M8 26L14 14H22L16 26H8Z" fill="#0a0a0a" />
-          </svg>
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ fontWeight: 900, fontSize: '1.3rem', letterSpacing: '-1.5px', fontFamily: 'Plus Jakarta Sans, sans-serif', color: '#0a0a0a', lineHeight: 1 }}>Gigzo</span>
-              <span style={{ fontSize: '0.65rem', fontWeight: 800, backgroundColor: 'var(--pastel-lime)', color: '#3a6600', padding: '3px 8px', borderRadius: '100px', letterSpacing: '0.04em' }}>STORE</span>
-            </div>
-            <span style={{ fontSize: '0.6rem', fontWeight: 800, color: '#6b7280', marginTop: '2px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Powered by ProfitupX</span>
-          </div>
-        </Link>
+        <div style={{ padding: '0 8px 32px' }}>
+          <Link href="/dashboard" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
+            <img src="/icon.png" alt="ProfitupX" style={{ width: '28px', height: '28px', borderRadius: '6px' }} />
+            <span style={{ fontWeight: 900, fontSize: '1.3rem', letterSpacing: '-1.5px', fontFamily: 'Plus Jakarta Sans, sans-serif', color: '#0a0a0a', lineHeight: 1 }}>ProfitupX</span>
+          </Link>
+        </div>
 
         {/* Client-side navigation */}
         <SidebarNav
@@ -95,8 +88,8 @@ export default async function DashboardLayout({
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             {/* Show logo on mobile since sidebar is hidden */}
-            <div className="mobile-menu-btn" style={{ display: 'none', width: 32, height: 32, borderRadius: 8, background: '#0a0a0a', color: '#c8f135', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '0.9rem' }}>
-              G
+            <div className="mobile-menu-btn" style={{ display: 'none', alignItems: 'center', justifyContent: 'center' }}>
+              <img src="/icon.png" alt="ProfitupX" style={{ width: '32px', height: '32px', borderRadius: '6px' }} />
             </div>
             
             <div style={{ 

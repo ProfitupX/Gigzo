@@ -4,12 +4,12 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL('https://profitupx.com'),
   title: {
-    default: "Gigzo by ProfitupX — Sell Anything. No Website Needed.",
-    template: "%s | Gigzo by ProfitupX"
+    default: "ProfitupX — Sell Anything. No Website Needed.",
+    template: "%s | ProfitupX"
   },
   description:
     "India's fastest link-in-bio commerce platform. Launch your store in 2 minutes with UPI payments, zero friction checkout, and mobile-first design.",
-  keywords: ["creator store", "link in bio", "UPI payments", "Indian creator", "sell digital products", "Instagram store", "ProfitupX", "Gigzo"],
+  keywords: ["creator store", "link in bio", "UPI payments", "Indian creator", "sell digital products", "Instagram store", "ProfitupX", "ProfitupX"],
   authors: [{ name: "ProfitupX" }],
   creator: "ProfitupX",
   publisher: "ProfitupX",
@@ -17,11 +17,11 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: "Gigzo by ProfitupX — Sell Anything. No Website Needed.",
+    title: "ProfitupX — Sell Anything. No Website Needed.",
     description:
       "Launch your creator store in 2 minutes. UPI payments, zero friction checkout, mobile-first. Built for Indian Instagram creators.",
     url: 'https://profitupx.com',
-    siteName: 'Gigzo by ProfitupX',
+    siteName: 'ProfitupX',
     images: [
       {
         url: 'https://i.ibb.co/jkQ7YQwJ/profitup.png', // Fallback to company logo if no OG image
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Gigzo by ProfitupX — Sell Anything. No Website Needed.",
+    title: "ProfitupX — Sell Anything. No Website Needed.",
     description: "Launch your creator store in 2 minutes. UPI payments, zero friction checkout, mobile-first.",
     creator: '@profitupx',
     images: ['https://i.ibb.co/jkQ7YQwJ/profitup.png'],
@@ -52,7 +52,7 @@ const jsonLd = {
   ],
   brand: {
     '@type': 'Brand',
-    name: 'Gigzo',
+    name: 'ProfitupX',
     logo: 'https://i.ibb.co/jkQ7YQwJ/profitup.png'
   }
 };

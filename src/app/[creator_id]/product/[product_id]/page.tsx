@@ -5,7 +5,8 @@ import Link from 'next/link';
 
 import ProductInteractions from './ProductInteractions';
 import ReviewsSection from './ReviewsSection';
-import { ArrowLeft, Share2, Star } from 'lucide-react';
+import ShareButton from './ShareButton';
+import { ArrowLeft, Star } from 'lucide-react';
 
 export const revalidate = 60;
 
@@ -20,7 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ product_i
   if (!product) return { title: 'Product Not Found' };
 
   return {
-    title: `${product.title} | Gigzo Store`,
+    title: `${product.title} | ProfitupX Store`,
     description: product.description,
   };
 }
@@ -69,9 +70,7 @@ export default async function ProductPage({ params }: { params: Promise<{ creato
           <ArrowLeft size={20} />
         </Link>
         <div style={{ display: 'flex', gap: '10px' }}>
-          <button style={{ width: '40px', height: '40px', backgroundColor: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(10px)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0a0a0a', border: '1px solid rgba(0,0,0,0.05)' }}>
-            <Share2 size={18} />
-          </button>
+          <ShareButton title={product.title} />
         </div>
       </div>
 

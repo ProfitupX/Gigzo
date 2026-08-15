@@ -190,40 +190,12 @@ export default function StorefrontClient({ creator, products }: StorefrontClient
         </div>
       </div>
 
-      {/* Floating Bottom Nav Container */}
-      <div style={{
-        position: 'fixed',
-        bottom: '24px',
-        left: '0',
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'center',
-        zIndex: 100,
-        pointerEvents: 'none'
-      }}>
-        {/* Floating Pill Nav */}
-        <div style={{
-          backgroundColor: 'rgba(255, 255, 255, 0.9)',
-          backdropFilter: 'blur(20px)',
-          border: '1px solid rgba(0,0,0,0.08)',
-          boxShadow: '0 10px 40px rgba(0,0,0,0.12)',
-          borderRadius: '100px',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
-          padding: '8px 12px',
-          pointerEvents: 'auto'
-        }}>
-          <button style={{ width: '56px', height: '48px', borderRadius: '100px', backgroundColor: '#0a0a0a', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none' }}>
-            <Home size={20} fill="#fff" />
-          </button>
-          <button style={{ width: '56px', height: '48px', borderRadius: '100px', backgroundColor: 'transparent', color: '#0a0a0a', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none' }}>
-            <Search size={22} />
-          </button>
-          <button style={{ width: '56px', height: '48px', borderRadius: '100px', backgroundColor: 'transparent', color: '#0a0a0a', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none' }}>
-            <ShoppingBag size={22} />
-          </button>
-        </div>
+      {/* Branding Footer */}
+      <div style={{ textAlign: 'center', padding: '24px 0', marginTop: '20px' }}>
+        <a href="https://profitupx.com" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'var(--text-muted)', fontSize: '0.8rem', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+          <img src="/icon.png" alt="ProfitupX" style={{ width: '16px', height: '16px', borderRadius: '4px' }} />
+          Powered by ProfitupX
+        </a>
       </div>
 
       <style>{`

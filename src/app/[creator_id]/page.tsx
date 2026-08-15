@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ creator_i
   if (!creator) return { title: 'Store Not Found' };
 
   return {
-    title: `${creator.brand_name} | Gigzo Store`,
+    title: `${creator.brand_name} | ProfitupX Store`,
     description: creator.bio || `Shop exclusive products from ${creator.brand_name}`,
   };
 }

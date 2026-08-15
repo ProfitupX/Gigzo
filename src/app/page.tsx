@@ -335,7 +335,7 @@ export default function Home() {
       emoji: '😤',
       title: 'Shopify Costs Too Much',
       problem: '₹3,000/month just for a store you barely use?',
-      solution: 'Gigzo is free to start. Pay only when you earn — just a small % per sale.',
+      solution: 'ProfitupX is free to start. Pay only when you earn — just a small % per sale.',
       color: 'var(--pastel-pink)',
       accent: '#be185d',
     },
@@ -343,7 +343,7 @@ export default function Home() {
       emoji: '📱',
       title: 'Desktop-Only Tools',
       problem: 'Existing platforms force you to sit at a laptop to manage your store.',
-      solution: 'Gigzo is built mobile-first. Manage, upload, and track sales from your phone.',
+      solution: 'ProfitupX is built mobile-first. Manage, upload, and track sales from your phone.',
       color: 'var(--pastel-purple)',
       accent: '#5b21b6',
     },
@@ -359,7 +359,7 @@ export default function Home() {
       emoji: '⚡',
       title: 'Setup Takes Days',
       problem: 'Building a Shopify store needs developers, designers, and patience.',
-      solution: 'Your Gigzo store is live in under 2 minutes. Seriously.',
+      solution: 'Your ProfitupX store is live in under 2 minutes. Seriously.',
       color: 'var(--pastel-orange)',
       accent: '#c2410c',
     },
@@ -371,7 +371,7 @@ export default function Home() {
     { icon: <IconMobile />, title: 'Mobile Dashboard', desc: 'Add products, track orders, and manage payouts all from your smartphone.', color: 'var(--pastel-purple)', accent: '#5b21b6' },
     { icon: <IconZap />, title: '2-Minute Go-Live', desc: 'Upload photo → Set price → Get link. Your store is live before your chai gets cold.', color: 'var(--pastel-orange)', accent: '#c2410c' },
     { icon: <IconTrendingUp />, title: 'Real-Time Analytics', desc: "See who's visiting, what's selling, and how much you've earned — live.", color: 'var(--pastel-pink)', accent: '#be185d' },
-    { icon: <IconShield />, title: 'Auto Digital Delivery', desc: "Sold an ebook or preset? Gigzo auto-emails the file. You're asleep, money's flowing.", color: '#f0fdf4', accent: '#16a34a' },
+    { icon: <IconShield />, title: 'Auto Digital Delivery', desc: "Sold an ebook or preset? ProfitupX auto-emails the file. You're asleep, money's flowing.", color: '#f0fdf4', accent: '#16a34a' },
   ];
 
   const steps = [
@@ -394,7 +394,7 @@ export default function Home() {
     {
       num: '03',
       title: 'Share & Start Earning',
-      desc: 'Drop your Gigzo link in your Instagram bio. Your followers tap, pay via UPI, and receive their order automatically.',
+      desc: 'Drop your ProfitupX link in your Instagram bio. Your followers tap, pay via UPI, and receive their order automatically.',
       color: '#7b5ea7',
       textColor: '#ffffff',
       hint: 'Instant live link',
@@ -416,7 +416,7 @@ export default function Home() {
       handle: '@arjun.fitness',
       followers: '210K followers',
       avatar: '💪',
-      text: 'My followers were dropping off at Shopify checkout. Switched to Gigzo and my conversion rate jumped 3x overnight.',
+      text: 'My followers were dropping off at Shopify checkout. Switched to ProfitupX and my conversion rate jumped 3x overnight.',
       stars: 5,
       badge: 'Fitness Coach',
     },
@@ -452,8 +452,8 @@ export default function Home() {
   ];
 
   const faqs = [
-    { question: 'Is Gigzo really free to start?', answer: 'Yes! Gigzo is completely free to start. We charge only a small platform fee (3-5%) on successful sales. No monthly subscription, no setup fee, no hidden charges.' },
-    { question: 'What can I sell on Gigzo?', answer: 'You can sell digital products (ebooks, PDF guides, Lightroom presets, Notion templates, courses, audio files) and simple physical products with flat-rate shipping. Multi-product stores are coming in V2.' },
+    { question: 'Is ProfitupX really free to start?', answer: 'Yes! ProfitupX is completely free to start. We charge only a small platform fee (3-5%) on successful sales. No monthly subscription, no setup fee, no hidden charges.' },
+    { question: 'What can I sell on ProfitupX?', answer: 'You can sell digital products (ebooks, PDF guides, Lightroom presets, Notion templates, courses, audio files) and simple physical products with flat-rate shipping. Multi-product stores are coming in V2.' },
     { question: 'How do I get paid?', answer: 'Your buyers pay via UPI (GPay, PhonePe, Paytm) directly. Payments are settled to your bank account weekly, with clear payout reports in your dashboard.' },
     { question: 'Do my buyers need to create an account?', answer: 'Absolutely not! That\'s our biggest advantage. Buyers just enter their name + email for delivery. Payment is one UPI tap. Zero friction, maximum conversions.' },
     { question: 'How fast can I launch my store?', answer: 'Tested by real creators — average launch time is under 2 minutes. Login → upload product → get link → put in bio. That\'s it.' },
@@ -488,13 +488,9 @@ export default function Home() {
       >
         {/* Logo */}
         <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none', flexShrink: 0 }}>
-          <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 30L22 10H32L22 30H12Z" fill="#0a0a0a" />
-            <path d="M8 26L14 14H22L16 26H8Z" fill="#0a0a0a" />
-          </svg>
+          <img src="/icon.png" alt="ProfitupX" style={{ width: '28px', height: '28px', borderRadius: '6px' }} />
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <span style={{ fontWeight: 900, fontSize: '1.45rem', letterSpacing: '-1px', fontFamily: 'Plus Jakarta Sans, sans-serif', color: '#0a0a0a', lineHeight: 1 }}>Gigzo</span>
-            <span style={{ fontSize: '0.6rem', fontWeight: 800, color: '#6b7280', marginTop: '2px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Powered by ProfitupX</span>
+            <span style={{ fontWeight: 900, fontSize: '1.45rem', letterSpacing: '-1px', fontFamily: 'Plus Jakarta Sans, sans-serif', color: '#0a0a0a', lineHeight: 1 }}>ProfitupX</span>
           </div>
         </Link>
 
@@ -669,7 +665,7 @@ export default function Home() {
                   <path d="M 300 80 L 320 140" fill="none" stroke="var(--border)" strokeWidth="2" />
                 </svg>
 
-                {/* Nodes (Pills mapped to Gigzo Highlights) */}
+                {/* Nodes (Pills mapped to ProfitupX Highlights) */}
                 <div style={{ position: 'absolute', top: '0px', left: '0px', zIndex: 1, background: '#fff', border: '1px solid var(--border)', padding: '8px 20px', borderRadius: '100px', fontSize: '0.85rem', fontWeight: 700 }}>Join 250+ creators</div>
                 <div style={{ position: 'absolute', top: '0px', left: '200px', zIndex: 1, background: '#fff', border: '1px solid var(--border)', width: '32px', height: '32px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600 }}>+</div>
                 <div style={{ position: 'absolute', top: '0px', left: '260px', zIndex: 1, background: '#fff', border: '1px solid var(--border)', padding: '8px 20px', borderRadius: '100px', fontSize: '0.85rem', fontWeight: 700 }}>+₹499 New Sale</div>
@@ -885,7 +881,7 @@ export default function Home() {
                 <span style={{ fontSize: '0.72rem', fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase', opacity: 0.5 }}>01 / Pain</span>
               </div>
               <h3 style={{ fontSize: '1.35rem', fontWeight: 900, marginBottom: '10px', color: '#1a2a00', letterSpacing: '-0.02em' }}>Shopify Costs Too Much</h3>
-              <p style={{ fontSize: '0.88rem', color: 'rgba(0,0,0,0.6)', lineHeight: 1.7, marginBottom: '24px' }}>₹3,000/month for a store you barely use? Gigzo is free to start — pay only a small % per sale.</p>
+              <p style={{ fontSize: '0.88rem', color: 'rgba(0,0,0,0.6)', lineHeight: 1.7, marginBottom: '24px' }}>₹3,000/month for a store you barely use? ProfitupX is free to start — pay only a small % per sale.</p>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 700, fontSize: '0.85rem', color: '#1a2a00' }}>
                 <span>Free to start</span>
                 <IconArrow />
@@ -906,7 +902,7 @@ export default function Home() {
                 <span style={{ fontSize: '0.72rem', fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase', opacity: 0.3 }}>02 / Pain</span>
               </div>
               <h3 style={{ fontSize: '1.35rem', fontWeight: 900, marginBottom: '10px', letterSpacing: '-0.02em' }}>Desktop-Only Tools</h3>
-              <p style={{ fontSize: '0.88rem', color: 'rgba(255,255,255,0.5)', lineHeight: 1.7, marginBottom: '24px' }}>Existing platforms force you to sit at a laptop. Gigzo is 100% mobile-first — manage everything from your phone.</p>
+              <p style={{ fontSize: '0.88rem', color: 'rgba(255,255,255,0.5)', lineHeight: 1.7, marginBottom: '24px' }}>Existing platforms force you to sit at a laptop. ProfitupX is 100% mobile-first — manage everything from your phone.</p>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 700, fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)' }}>
                 <span>Mobile dashboard</span>
                 <IconArrow />
@@ -927,7 +923,7 @@ export default function Home() {
                 <span style={{ fontSize: '0.72rem', fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase', opacity: 0.3, color: '#5b21b6' }}>03 / Pain</span>
               </div>
               <h3 style={{ fontSize: '1.35rem', fontWeight: 900, marginBottom: '10px', color: '#3b0764', letterSpacing: '-0.02em' }}>Buyers Drop at Checkout</h3>
-              <p style={{ fontSize: '0.88rem', color: '#5b21b6', lineHeight: 1.7, marginBottom: '24px', opacity: 0.75 }}>Account creation, credit card forms, OTPs — buyers give up. Gigzo: zero registration, one UPI tap.</p>
+              <p style={{ fontSize: '0.88rem', color: '#5b21b6', lineHeight: 1.7, marginBottom: '24px', opacity: 0.75 }}>Account creation, credit card forms, OTPs — buyers give up. ProfitupX: zero registration, one UPI tap.</p>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 700, fontSize: '0.85rem', color: '#5b21b6' }}>
                 <span>1-tap UPI checkout</span>
                 <IconArrow />
@@ -948,7 +944,7 @@ export default function Home() {
                 <span style={{ fontSize: '0.72rem', fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase', opacity: 0.3, color: '#c2410c' }}>04 / Pain</span>
               </div>
               <h3 style={{ fontSize: '1.35rem', fontWeight: 900, marginBottom: '10px', color: '#7c2d12', letterSpacing: '-0.02em' }}>Setup Takes Days</h3>
-              <p style={{ fontSize: '0.88rem', color: '#9a3412', lineHeight: 1.7, marginBottom: '24px', opacity: 0.75 }}>Building a Shopify store needs developers, designers, and patience. Gigzo store is live in under 2 minutes.</p>
+              <p style={{ fontSize: '0.88rem', color: '#9a3412', lineHeight: 1.7, marginBottom: '24px', opacity: 0.75 }}>Building a Shopify store needs developers, designers, and patience. ProfitupX store is live in under 2 minutes.</p>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 700, fontSize: '0.85rem', color: '#c2410c' }}>
                 <span>2-minute launch</span>
                 <IconArrow />
@@ -1044,7 +1040,7 @@ export default function Home() {
                 Your Empire.
               </h2>
               <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '1.05rem', lineHeight: 1.8, marginBottom: '40px' }}>
-                Gigzo gives you a stunning mobile-optimized storefront that loads in under 1 second — even on 4G. Designed specifically for Instagram's in-app browser.
+                ProfitupX gives you a stunning mobile-optimized storefront that loads in under 1 second — even on 4G. Designed specifically for Instagram's in-app browser.
               </p>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
@@ -1079,7 +1075,7 @@ export default function Home() {
               }}>
                 <Image
                   src="/dashboard_mockup.jpg"
-                  alt="Gigzo creator dashboard showing sales analytics"
+                  alt="ProfitupX creator dashboard showing sales analytics"
                   width={600}
                   height={380}
                   style={{ width: '100%', height: 'auto' }}
@@ -1207,13 +1203,13 @@ export default function Home() {
               {/* Text Right */}
               <div style={{ paddingLeft: '20px' }}>
                 <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 14px', background: 'var(--pastel-purple)', color: '#5b21b6', borderRadius: '100px', fontSize: '0.8rem', fontWeight: 800, marginBottom: '24px' }}>
-                  <Target size={16} /> Gigzo Marketplace
+                  <Target size={16} /> ProfitupX Marketplace
                 </div>
                 <h3 style={{ fontSize: 'clamp(2rem, 4vw, 2.8rem)', fontWeight: 900, lineHeight: 1.1, marginBottom: '20px', letterSpacing: '-0.03em' }}>
                   Get discovered by <br/> new buyers.
                 </h3>
                 <p style={{ fontSize: '1.1rem', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '32px' }}>
-                  Don't just rely on your Instagram bio link. Every product you create is automatically indexed in the Gigzo Marketplace, exposing you to thousands of cross-shopping buyers daily.
+                  Don't just rely on your Instagram bio link. Every product you create is automatically indexed in the ProfitupX Marketplace, exposing you to thousands of cross-shopping buyers daily.
                 </p>
                 <ul style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                   {['Automated cross-selling', 'Trending product charts', 'Global search visibility'].map(f => (
@@ -1332,7 +1328,7 @@ export default function Home() {
               <span style={{ color: '#7b5ea7' }}>Trust our creators.</span>
             </h2>
             <p style={{ color: 'var(--text-muted)', fontSize: '1rem', maxWidth: '520px', margin: '0 auto' }}>
-              Thousands of Indian creators are already earning on Gigzo. Here's what they say.
+              Thousands of Indian creators are already earning on ProfitupX. Here's what they say.
             </p>
           </div>
 
@@ -1342,7 +1338,7 @@ export default function Home() {
               {
                 name: 'Priya Sharma', handle: '@priya.creates', badge: 'Digital Creator',
                 date: '12 Jun 2026', time: '09:41 AM',
-                text: 'Sold ₹47,000 of Lightroom presets in the first week using Gigzo. Setting up took literally 90 seconds. No tech skills needed at all!',
+                text: 'Sold ₹47,000 of Lightroom presets in the first week using ProfitupX. Setting up took literally 90 seconds. No tech skills needed at all!',
                 likes: 342, comments: 28, avatarBg: '#fce7f3', avatarText: 'PS', platform: 'instagram',
               },
               {
@@ -1490,7 +1486,7 @@ export default function Home() {
               Frequently<br /><span className="gradient-text-lime">Asked</span><br />Questions
             </h2>
             <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', maxWidth: '500px', margin: '0 auto', lineHeight: 1.65 }}>
-              Everything you need to know about Gigzo. If your question isn't here, drop us a message.
+              Everything you need to know about ProfitupX. If your question isn't here, drop us a message.
             </p>
           </motion.div>
 
@@ -1505,7 +1501,7 @@ export default function Home() {
             </div>
             <div style={{ background: '#fff', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 4px 24px rgba(0,0,0,0.05)', border: '1px solid var(--border)' }}>
               {[
-                { question: 'Is Gigzo really free to start?', answer: 'Yes! Gigzo is completely free to start. We charge only a small platform fee (3–5%) on successful sales. No monthly subscription, no setup fee, no hidden charges.' },
+                { question: 'Is ProfitupX really free to start?', answer: 'Yes! ProfitupX is completely free to start. We charge only a small platform fee (3–5%) on successful sales. No monthly subscription, no setup fee, no hidden charges.' },
                 { question: 'How fast can I launch my store?', answer: 'Tested by real creators — average launch time is under 2 minutes. Login → upload product → get link → put in bio. That\'s it.' },
                 { question: 'Is this only for big influencers?', answer: 'Not at all. We\'re built for micro-creators (even 1K followers). If your audience trusts you, they\'ll buy from you. Follower count matters less than authentic connection.' },
               ].map((f, i) => (
@@ -1527,7 +1523,7 @@ export default function Home() {
             </div>
             <div style={{ background: '#fff', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 4px 24px rgba(0,0,0,0.05)', border: '1px solid var(--border)' }}>
               {[
-                { question: 'What can I sell on Gigzo?', answer: 'You can sell digital products (ebooks, PDF guides, Lightroom presets, Notion templates, courses, audio files) and simple physical products with flat-rate shipping. Multi-product stores are coming in V2.' },
+                { question: 'What can I sell on ProfitupX?', answer: 'You can sell digital products (ebooks, PDF guides, Lightroom presets, Notion templates, courses, audio files) and simple physical products with flat-rate shipping. Multi-product stores are coming in V2.' },
                 { question: 'How do I get paid?', answer: 'Your buyers pay via UPI (GPay, PhonePe, Paytm) directly. Payments are settled to your bank account weekly, with clear payout reports in your dashboard.' },
                 { question: 'Do my buyers need to create an account?', answer: 'Absolutely not! That\'s our biggest advantage. Buyers just enter their name + email for delivery. Payment is one UPI tap. Zero friction, maximum conversions.' },
               ].map((f, i) => (
@@ -1581,7 +1577,7 @@ export default function Home() {
             <span className="gradient-text-lime">2 Minutes Away</span>
           </h2>
           <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '1.1rem', lineHeight: 1.7, marginBottom: '40px' }}>
-            Join 250+ Indian creators already earning with Gigzo. No tech skills needed. No monthly fees. Just your link and your audience.
+            Join 250+ Indian creators already earning with ProfitupX. No tech skills needed. No monthly fees. Just your link and your audience.
           </p>
 
           <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -1610,7 +1606,7 @@ export default function Home() {
               Run your business <br/> from your pocket.
             </motion.h2>
             <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} style={{ fontSize: '1.1rem', color: 'var(--text-secondary)', maxWidth: '500px', margin: '0 auto' }}>
-              Download the Gigzo Creator App. Track sales, upload products, and manage your store — 100% on mobile.
+              Download the ProfitupX Creator App. Track sales, upload products, and manage your store — 100% on mobile.
             </motion.p>
           </div>
 
@@ -1677,10 +1673,8 @@ export default function Home() {
             {/* Brand */}
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
-                <div style={{ width: 32, height: 32, borderRadius: 8, background: 'var(--accent-lime)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <span style={{ color: '#1a2a00', fontWeight: 900, fontSize: '0.9rem' }}>G</span>
-                </div>
-                <span style={{ fontWeight: 900, fontSize: '1.2rem', color: '#fff', letterSpacing: '-1px' }}>Gigzo</span>
+                <img src="/icon.png" alt="ProfitupX" style={{ width: '32px', height: '32px', borderRadius: '8px' }} />
+                <span style={{ fontWeight: 900, fontSize: '1.2rem', color: '#fff', letterSpacing: '-1px' }}>ProfitupX</span>
               </div>
               <p style={{ fontSize: '0.88rem', lineHeight: 1.7, maxWidth: '260px', color: 'rgba(255,255,255,0.7)' }}>
                 India's fastest link-in-bio commerce platform. Built for Indian creators, powered by UPI.
@@ -1737,7 +1731,7 @@ export default function Home() {
             flexWrap: 'wrap',
             gap: '16px',
           }}>
-            <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.7)', display: 'flex', alignItems: 'center', gap: '4px' }}>© 2026 Gigzo powered by ProfitupX. Made with <Heart size={14} className="text-red-500" fill="currentColor" /> in India</p>
+            <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.7)', display: 'flex', alignItems: 'center', gap: '4px' }}>© 2026 ProfitupX. Made with <Heart size={14} className="text-red-500" fill="currentColor" /> in India</p>
             <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.7)' }}>Empowering creators to monetize their passion.</p>
           </div>
         </div>

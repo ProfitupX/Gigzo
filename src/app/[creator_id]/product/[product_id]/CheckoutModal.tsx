@@ -216,7 +216,7 @@ export default function CheckoutModal({ product, selectedVariant, onClose }: Che
                 {/* 1-Tap Mobile UPI Intent App Buttons */}
                 <div style={{ width: '100%', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                   <a 
-                    href={`intent://pay?pa=${masterUpiId}&pn=Gigzo_Store&am=${totalPrice}&tn=${currentOrderId}&cu=INR#Intent;scheme=upi;package=com.google.android.apps.nbu.paisa.user;end`}
+                    href={`intent://pay?pa=${masterUpiId}&pn=ProfitupX_Store&am=${totalPrice}&tn=${currentOrderId}&cu=INR#Intent;scheme=upi;package=com.google.android.apps.nbu.paisa.user;end`}
                     style={{ 
                       padding: '12px', borderRadius: '12px', backgroundColor: '#ffffff', color: '#1a73e8', 
                       border: '1.5px solid #4285f4', fontSize: '0.82rem', fontWeight: 800, textDecoration: 'none',
@@ -227,7 +227,7 @@ export default function CheckoutModal({ product, selectedVariant, onClose }: Che
                   </a>
 
                   <a 
-                    href={`intent://pay?pa=${masterUpiId}&pn=Gigzo_Store&am=${totalPrice}&tn=${currentOrderId}&cu=INR#Intent;scheme=upi;package=com.phonepe.app;end`}
+                    href={`intent://pay?pa=${masterUpiId}&pn=ProfitupX_Store&am=${totalPrice}&tn=${currentOrderId}&cu=INR#Intent;scheme=upi;package=com.phonepe.app;end`}
                     style={{ 
                       padding: '12px', borderRadius: '12px', backgroundColor: '#ffffff', color: '#5f259f', 
                       border: '1.5px solid #5f259f', fontSize: '0.82rem', fontWeight: 800, textDecoration: 'none',
@@ -238,7 +238,7 @@ export default function CheckoutModal({ product, selectedVariant, onClose }: Che
                   </a>
 
                   <a 
-                    href={`intent://pay?pa=${masterUpiId}&pn=Gigzo_Store&am=${totalPrice}&tn=${currentOrderId}&cu=INR#Intent;scheme=upi;package=net.one97.paytm;end`}
+                    href={`intent://pay?pa=${masterUpiId}&pn=ProfitupX_Store&am=${totalPrice}&tn=${currentOrderId}&cu=INR#Intent;scheme=upi;package=net.one97.paytm;end`}
                     style={{ 
                       padding: '12px', borderRadius: '12px', backgroundColor: '#ffffff', color: '#002e6e', 
                       border: '1.5px solid #00baf2', fontSize: '0.82rem', fontWeight: 800, textDecoration: 'none',
