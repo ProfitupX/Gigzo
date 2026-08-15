@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import AdminShell from './AdminShell';
+import AdminShell from '../AdminShell';
 
 const ADMIN_SECRET = 'px-admin-authenticated-2025';
 
