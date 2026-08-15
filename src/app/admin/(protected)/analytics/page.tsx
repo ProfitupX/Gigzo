@@ -128,7 +128,7 @@ export default function AdminAnalyticsPage() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
         {[
           { label: 'Total Platform Revenue', value: `₹${stats.totalRevenue.toLocaleString('en-IN')}`, desc: 'All sellers combined', color: '#0a0a0a' },
-          { label: 'Platform Commission (~4%)', value: `₹${Math.round(stats.totalRevenue * 0.04).toLocaleString('en-IN')}`, desc: 'Your earnings', color: '#4f46e5' },
+          { label: 'Platform Commission (~5%)', value: `₹${Math.round(stats.totalRevenue * 0.05).toLocaleString('en-IN')}`, desc: 'Your earnings', color: '#4f46e5' },
           { label: 'Order Success Rate', value: `${stats.totalOrders > 0 ? Math.round((stats.paidOrderCount / stats.totalOrders) * 100) : 0}%`, desc: `${stats.paidOrderCount} of ${stats.totalOrders} paid`, color: '#16a34a' },
         ].map(s => (
           <div key={s.label} style={{ backgroundColor: '#ffffff', border: '1px solid var(--border)', borderRadius: '16px', padding: '24px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)' }}>

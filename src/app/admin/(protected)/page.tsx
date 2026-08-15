@@ -65,7 +65,7 @@ export default function AdminOverviewPage() {
 
   if (!stats) return <div style={{ color: '#ef4444', textAlign: 'center', marginTop: 60, padding: 20, backgroundColor: '#fee2e2', borderRadius: 12 }}>Failed to load stats. Check connection.</div>;
 
-  const commissionRate = 0.04;
+  const commissionRate = 0.05;
   const platformCommission = stats.totalRevenue * commissionRate;
 
   return (
@@ -84,7 +84,7 @@ export default function AdminOverviewPage() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '16px' }}>
         <StatCard label="Total Sellers" value={String(stats.sellerCount || 0)} sub={`+${stats.newSellersThisWeek} this week`} icon={<Users size={20} />} accent="#0a0a0a" trend={`+${stats.newSellersThisWeek} 📈`} />
         <StatCard label="Total Revenue" value={`₹${Number(stats.totalRevenue || 0).toLocaleString('en-IN')}`} sub="All sellers combined" icon={<IndianRupee size={20} />} accent="#6366f1" />
-        <StatCard label="Platform Earnings" value={`₹${Math.round(platformCommission).toLocaleString('en-IN')}`} sub="~4% commission" icon={<TrendingUp size={20} />} accent="#f59e0b" />
+        <StatCard label="Platform Earnings" value={`₹${Math.round(platformCommission).toLocaleString('en-IN')}`} sub="~5% commission" icon={<TrendingUp size={20} />} accent="#f59e0b" />
         <StatCard label="Total Orders" value={String(stats.totalOrders || 0)} sub={`${stats.paidOrderCount} paid · ${stats.pendingOrderCount} pending`} icon={<ShoppingCart size={20} />} accent="#ec4899" />
         <StatCard label="Total Products" value={String(stats.productCount || 0)} sub="Across all stores" icon={<Package size={20} />} accent="#22c55e" />
         <StatCard label="Avg Order Value" value={`₹${stats.totalOrders > 0 ? Math.round(stats.totalRevenue / stats.totalOrders).toLocaleString('en-IN') : 0}`} sub="Per order average" icon={<ArrowUpRight size={20} />} accent="#06b6d4" />

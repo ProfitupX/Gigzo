@@ -194,7 +194,7 @@ export default function SettingsPage() {
                 />
               </div>
               <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '6px' }}>
-                Buyers pay directly to this UPI ID via GPay, PhonePe, or Paytm with 0% gateway fee.
+                ProfitupX will send your 95% earnings to this UPI ID.
               </p>
             </div>
 

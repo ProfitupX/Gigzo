@@ -33,6 +33,25 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: true });
     }
 
+    if (action === 'record_payout') {
+      const { amount, utr } = body;
+      if (!amount) return NextResponse.json({ error: 'Missing amount' }, { status: 400 });
+      
+      const { error } = await supabase.from('payouts').insert({
+        creator_id: id,
+        amount: amount,
+        utr: utr || null,
+      });
+      if (error) throw error;
+      return NextResponse.json({ success: true });
+    }
+
+    if (action === 'approve_order') {
+      const { error } = await supabase.from('orders').update({ status: 'paid' }).eq('id', id);
+      if (error) throw error;
+      return NextResponse.json({ success: true });
+    }
+
     return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
   } catch (error: any) {
     console.error('Admin Action Error:', error);

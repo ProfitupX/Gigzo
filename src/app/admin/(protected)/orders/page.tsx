@@ -123,10 +123,10 @@ export default function AdminOrdersPage() {
         {filtered.length === 0 && <p style={{ color: 'var(--text-muted)', textAlign: 'center', padding: '40px', fontSize: '0.9rem', fontWeight: 500 }}>No orders found.</p>}
 
         <div style={{ overflowX: 'auto' }}>
-          <div style={{ minWidth: '650px' }}>
+          <div style={{ minWidth: '700px' }}>
             {filtered.map(order => (
               <div key={order.id}
-                style={{ display: 'grid', gridTemplateColumns: 'minmax(150px, 1.5fr) minmax(150px, 1.5fr) 100px 120px 100px', gap: '16px', padding: '16px 24px', borderBottom: '1px solid var(--border)', transition: 'background 0.15s', alignItems: 'center' }}
+                style={{ display: 'grid', gridTemplateColumns: 'minmax(130px, 1.5fr) minmax(130px, 1.5fr) 100px 100px 180px', gap: '16px', padding: '16px 24px', borderBottom: '1px solid var(--border)', transition: 'background 0.15s', alignItems: 'center' }}
                 onMouseEnter={e => (e.currentTarget.style.backgroundColor = 'var(--surface-2)')}
                 onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'transparent')}
               >
@@ -134,16 +134,43 @@ export default function AdminOrdersPage() {
                 <span style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>{getCreatorName(order.creator_id)}</span>
                 <span style={{ color: '#0a0a0a', fontWeight: 800, fontSize: '0.9rem' }}>₹{Number(order.amount).toLocaleString('en-IN')}</span>
                 <span style={{ color: 'var(--text-secondary)', fontSize: '0.8rem', fontWeight: 500 }}>{new Date(order.created_at).toLocaleDateString('en-IN')}</span>
-                <span style={{
-                  display: 'inline-flex', alignItems: 'center', gap: '5px',
-                  fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em',
-                  color: order.status === 'paid' ? '#16a34a' : '#d97706',
-                  backgroundColor: order.status === 'paid' ? '#dcfce7' : '#fef3c7',
-                  padding: '4px 10px', borderRadius: '100px', width: 'fit-content',
-                }}>
-                  {order.status === 'paid' ? <CheckCircle2 size={12} /> : <Clock size={12} />}
-                  {order.status}
-                </span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '5px',
+                    fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em',
+                    color: order.status === 'paid' ? '#16a34a' : '#d97706',
+                    backgroundColor: order.status === 'paid' ? '#dcfce7' : '#fef3c7',
+                    padding: '4px 10px', borderRadius: '100px', width: 'fit-content',
+                  }}>
+                    {order.status === 'paid' ? <CheckCircle2 size={12} /> : <Clock size={12} />}
+                    {order.status}
+                  </span>
+                  
+                  {order.status === 'pending' && (
+                    <button
+                      onClick={async () => {
+                        if (!confirm('Mark order as PAID and deliver product?')) return;
+                        const res = await fetch('/api/admin/action', {
+                          method: 'POST', headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({ action: 'approve_order', id: order.id })
+                        });
+                        if (res.ok) {
+                          setOrders(orders.map(o => o.id === order.id ? { ...o, status: 'paid' } : o));
+                        } else {
+                          alert('Failed to approve order');
+                        }
+                      }}
+                      style={{
+                        padding: '6px 12px',
+                        backgroundColor: '#0a0a0a', color: '#c8f135',
+                        border: 'none', borderRadius: '100px',
+                        fontSize: '0.75rem', fontWeight: 800, cursor: 'pointer',
+                      }}
+                    >
+                      Approve
+                    </button>
+                  )}
+                </div>
               </div>
             ))}
           </div>

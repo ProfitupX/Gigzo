@@ -12,11 +12,13 @@ import {
   Shield,
   Menu,
   X,
+  IndianRupee,
 } from 'lucide-react';
 import { useState } from 'react';
 
 const navItems = [
   { href: '/admin', label: 'Overview', icon: LayoutDashboard, exact: true },
+  { href: '/admin/payments', label: 'Payments', icon: IndianRupee, exact: false },
   { href: '/admin/sellers', label: 'Sellers', icon: Users, exact: false },
   { href: '/admin/orders', label: 'Orders', icon: ShoppingCart, exact: false },
   { href: '/admin/products', label: 'Products', icon: Package, exact: false },
