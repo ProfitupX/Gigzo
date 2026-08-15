@@ -37,8 +37,8 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   const Sidebar = () => (
     <aside style={{
       width: '260px',
-      background: '#0a0a0a',
-      borderRight: '1px solid rgba(255,255,255,0.07)',
+      backgroundColor: '#ffffff',
+      borderRight: '1px solid var(--border)',
       display: 'flex',
       flexDirection: 'column',
       height: '100vh',
@@ -47,40 +47,38 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
       padding: '0',
       flexShrink: 0,
       overflowY: 'auto',
+      zIndex: 20,
     }}>
       {/* Logo */}
-      <div style={{ padding: '28px 24px 20px', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
-        <Link href="/admin" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
-          <div style={{
-            width: '36px', height: '36px', borderRadius: '10px',
-            background: 'linear-gradient(135deg, #c8f135, #a3d911)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            flexShrink: 0,
-          }}>
-            <img src="/icon.png" alt="ProfitupX" style={{ width: 24, height: 24, borderRadius: 6 }} />
-          </div>
-          <div>
-            <span style={{ color: '#fff', fontWeight: 900, fontSize: '1rem', letterSpacing: '-0.03em', display: 'block', lineHeight: 1 }}>ProfitupX</span>
-            <span style={{ color: '#c8f135', fontSize: '0.68rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Admin Portal</span>
-          </div>
+      <div style={{ padding: '24px 20px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Link href="/admin" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
+          <img src="/icon.png" alt="ProfitupX" style={{ width: '28px', height: '28px', borderRadius: '6px' }} />
+          <span style={{ fontWeight: 900, fontSize: '1.3rem', letterSpacing: '-1.5px', fontFamily: 'Plus Jakarta Sans, sans-serif', color: '#0a0a0a', lineHeight: 1 }}>ProfitupX</span>
         </Link>
+        <button
+          className="admin-mobile-close"
+          onClick={() => setMobileOpen(false)}
+          style={{ display: 'none', background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', padding: '4px' }}
+        >
+          <X size={20} />
+        </button>
       </div>
 
       {/* Badge */}
-      <div style={{ padding: '14px 20px' }}>
+      <div style={{ padding: '0 20px 14px' }}>
         <div style={{
           display: 'inline-flex', alignItems: 'center', gap: '6px',
-          background: 'rgba(200,241,53,0.1)', border: '1px solid rgba(200,241,53,0.2)',
+          backgroundColor: '#0a0a0a',
           borderRadius: '100px', padding: '5px 12px',
-          color: '#c8f135', fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.06em',
+          color: '#ffffff', fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.06em',
         }}>
-          <Shield size={11} /> Super Admin
+          <Shield size={11} color="#c8f135" /> Super Admin
         </div>
       </div>
 
       {/* Nav */}
-      <nav style={{ padding: '8px 16px', flex: 1 }}>
-        <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.68rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', padding: '0 8px 10px' }}>Navigation</p>
+      <nav style={{ padding: '8px 16px', flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', padding: '0 12px 8px' }}>Menu</p>
         {navItems.map(item => {
           const isActive = item.exact ? pathname === item.href : pathname.startsWith(item.href);
           const Icon = item.icon;
@@ -91,41 +89,41 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
               onClick={() => setMobileOpen(false)}
               style={{
                 display: 'flex', alignItems: 'center', gap: '12px',
-                padding: '11px 14px',
-                borderRadius: '12px',
-                marginBottom: '4px',
+                padding: '11px 16px',
+                borderRadius: '14px',
                 textDecoration: 'none',
-                fontWeight: isActive ? 700 : 500,
+                fontWeight: isActive ? 700 : 600,
                 fontSize: '0.88rem',
-                color: isActive ? '#0a0a0a' : 'rgba(255,255,255,0.55)',
-                background: isActive ? '#c8f135' : 'transparent',
-                transition: 'all 0.15s ease',
+                color: isActive ? '#ffffff' : 'var(--text-secondary)',
+                backgroundColor: isActive ? '#0a0a0a' : 'transparent',
+                boxShadow: isActive ? '0 4px 14px rgba(10, 10, 10, 0.15)' : 'none',
+                transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
               }}
             >
-              <Icon size={17} style={{ flexShrink: 0, color: isActive ? '#0a0a0a' : 'rgba(255,255,255,0.35)' }} />
-              {item.label}
-              {isActive && <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#0a0a0a', marginLeft: 'auto', opacity: 0.5 }} />}
+              <Icon size={18} style={{ flexShrink: 0, color: isActive ? '#c8f135' : 'var(--text-muted)', transition: 'color 0.2s ease' }} />
+              <span>{item.label}</span>
+              {isActive && <div style={{ width: 6, height: 6, borderRadius: '50%', backgroundColor: '#c8f135', marginLeft: 'auto' }} />}
             </Link>
           );
         })}
       </nav>
 
       {/* Logout */}
-      <div style={{ padding: '16px', borderTop: '1px solid rgba(255,255,255,0.07)' }}>
+      <div style={{ padding: '16px', borderTop: '1px solid var(--border)' }}>
         <button
           onClick={handleLogout}
           style={{
             width: '100%', display: 'flex', alignItems: 'center', gap: '10px',
-            padding: '11px 14px', borderRadius: '12px',
-            background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.15)',
-            color: '#ef4444', fontWeight: 700, fontSize: '0.85rem',
+            padding: '11px 16px', borderRadius: '14px',
+            backgroundColor: 'var(--surface-2)', border: 'none',
+            color: 'var(--text-secondary)', fontWeight: 700, fontSize: '0.88rem',
             cursor: 'pointer', fontFamily: "'Plus Jakarta Sans', sans-serif",
-            transition: 'all 0.15s ease',
+            transition: 'all 0.2s ease',
           }}
-          onMouseEnter={e => (e.currentTarget.style.background = 'rgba(239,68,68,0.15)')}
-          onMouseLeave={e => (e.currentTarget.style.background = 'rgba(239,68,68,0.08)')}
+          onMouseEnter={e => { (e.currentTarget.style.color = '#ef4444'); (e.currentTarget.style.backgroundColor = '#fee2e2'); }}
+          onMouseLeave={e => { (e.currentTarget.style.color = 'var(--text-secondary)'); (e.currentTarget.style.backgroundColor = 'var(--surface-2)'); }}
         >
-          <LogOut size={16} />
+          <LogOut size={18} />
           Logout
         </button>
       </div>
@@ -133,7 +131,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   );
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', background: '#0f1117', fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#fff' }}>
+    <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#fafafa', fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#0a0a0a' }}>
       {/* Desktop sidebar */}
       <div className="admin-desktop-sidebar">
         <Sidebar />
@@ -141,9 +139,9 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
 
       {/* Mobile overlay sidebar */}
       {mobileOpen && (
-        <div style={{ position: 'fixed', inset: 0, zIndex: 200, display: 'flex' }}>
-          <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(4px)' }} onClick={() => setMobileOpen(false)} />
-          <div style={{ position: 'relative', zIndex: 1, width: 260 }}>
+        <div style={{ position: 'fixed', inset: 0, zIndex: 100, display: 'flex' }}>
+          <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(4px)' }} onClick={() => setMobileOpen(false)} />
+          <div style={{ position: 'relative', zIndex: 1, width: 260, backgroundColor: '#ffffff', height: '100vh' }}>
             <Sidebar />
           </div>
         </div>
@@ -153,37 +151,53 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
         {/* Top bar */}
         <header style={{
-          height: '62px', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          height: '68px', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           padding: '0 24px',
-          background: 'rgba(15,17,23,0.9)',
+          backgroundColor: 'rgba(255, 255, 255, 0.85)',
           backdropFilter: 'blur(16px)',
-          borderBottom: '1px solid rgba(255,255,255,0.07)',
+          borderBottom: '1px solid var(--border)',
           position: 'sticky', top: 0, zIndex: 50,
         }}>
-          <button
-            className="admin-mobile-menu"
-            onClick={() => setMobileOpen(true)}
-            style={{ display: 'none', background: 'none', border: 'none', color: '#fff', cursor: 'pointer', padding: '4px' }}
-          >
-            <Menu size={22} />
-          </button>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#22c55e', animation: 'pulse 2s infinite' }} />
-            <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.8rem', fontWeight: 600 }}>Live Dashboard</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <button
+              className="admin-mobile-menu"
+              onClick={() => setMobileOpen(true)}
+              style={{ display: 'none', background: 'none', border: 'none', color: '#0a0a0a', cursor: 'pointer', padding: '4px' }}
+            >
+              <Menu size={24} />
+            </button>
+            <div className="admin-mobile-logo" style={{ display: 'none' }}>
+              <img src="/icon.png" alt="ProfitupX" style={{ width: '28px', height: '28px', borderRadius: '6px' }} />
+            </div>
+            <div style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '8px', 
+              padding: '6px 14px', 
+              backgroundColor: 'var(--surface-2)', 
+              borderRadius: '100px',
+              fontSize: '0.82rem',
+              fontWeight: 700,
+              color: 'var(--text-secondary)'
+            }}>
+              <span style={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: '#22c55e', animation: 'pulse 2s infinite' }}></span>
+              Live Dashboard
+            </div>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <div style={{
-              background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)',
-              borderRadius: '100px', padding: '6px 14px',
-              color: 'rgba(255,255,255,0.7)', fontSize: '0.78rem', fontWeight: 700,
+              backgroundColor: '#0a0a0a', border: 'none',
+              borderRadius: '100px', padding: '8px 16px',
+              color: '#ffffff', fontSize: '0.82rem', fontWeight: 700,
+              boxShadow: '0 4px 14px rgba(10, 10, 10, 0.1)',
             }}>
-              🔐 Ganesh — Super Admin
+              🔐 Ganesh
             </div>
           </div>
         </header>
 
         {/* Page */}
-        <main style={{ flex: 1, padding: '32px', overflowY: 'auto', maxWidth: '1400px', width: '100%', margin: '0 auto' }}>
+        <main style={{ flex: 1, padding: '36px 40px 60px', overflowY: 'auto', maxWidth: '1400px', width: '100%', margin: '0 auto' }} className="admin-main-content">
           {children}
         </main>
       </div>
@@ -192,14 +206,24 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
         @keyframes spin { to { transform: rotate(360deg); } }
+        
+        :root {
+          --border: #e5e7eb;
+          --surface-2: #f3f4f6;
+          --text-secondary: #4b5563;
+          --text-muted: #9ca3af;
+        }
+
         @media (max-width: 768px) {
           .admin-desktop-sidebar { display: none !important; }
           .admin-mobile-menu { display: flex !important; }
+          .admin-mobile-logo { display: block !important; }
+          .admin-mobile-close { display: block !important; }
+          .admin-main-content { padding: 24px 16px 80px !important; }
         }
         * { box-sizing: border-box; }
-        input::placeholder { color: rgba(255,255,255,0.25); }
         ::-webkit-scrollbar { width: 6px; background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
       `}</style>
     </div>
   );
