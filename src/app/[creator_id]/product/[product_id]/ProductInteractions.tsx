@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import CheckoutModal from './CheckoutModal';
 import { ShoppingBag, Heart } from 'lucide-react';
 
@@ -13,6 +14,16 @@ export default function ProductInteractions({
 }) {
   const [selectedVariant, setSelectedVariant] = useState<string | null>(variants.length > 0 ? variants[0] : null);
   const [showCheckout, setShowCheckout] = useState(false);
+  
+  const searchParams = useSearchParams();
+  const isSuccess = searchParams.get('success') === 'true';
+  const orderRef = searchParams.get('order_id');
+
+  useEffect(() => {
+    if (isSuccess && orderRef) {
+      setShowCheckout(true);
+    }
+  }, [isSuccess, orderRef]);
 
   const handleBuyNow = () => {
     if (product.stock === 0 && product.is_physical) return;
@@ -108,7 +119,14 @@ export default function ProductInteractions({
         <CheckoutModal 
           product={product} 
           selectedVariant={selectedVariant}
-          onClose={() => setShowCheckout(false)} 
+          onClose={() => {
+            setShowCheckout(false);
+            if (isSuccess) {
+              window.history.replaceState({}, document.title, window.location.pathname);
+            }
+          }} 
+          initialStep={isSuccess ? 'success' : 'details'}
+          initialOrderId={orderRef || ''}
         />
       )}
     </>

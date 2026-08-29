@@ -9,7 +9,9 @@ import {
   Lock,
   Copy,
   Check,
-  Clock
+  Clock,
+  Download,
+  Truck
 } from 'lucide-react';
 
 interface CheckoutModalProps {
@@ -29,59 +31,69 @@ export default function CheckoutModal({ product, selectedVariant, onClose, initi
   const [pincode, setPincode] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [orderId, setOrderId] = useState(initialOrderId);
-  const [copiedUpi, setCopiedUpi] = useState(false);
-
-  const supabase = createClient();
 
   const isPhysical = product.is_physical;
   const shippingFee = isPhysical ? (Number(product.shipping_fee) || 0) : 0;
   const itemPrice = Number(product.price) || 0;
   const totalPrice = itemPrice + shippingFee;
 
-  const masterUpiId = process.env.NEXT_PUBLIC_ADMIN_UPI_ID || '8015078755@ptsbi';
-  const currentOrderId = orderId || `ORD_${Date.now()}`;
-  const upiIntentUrl = `upi://pay?pa=${masterUpiId}&pn=${encodeURIComponent('Gigzo Store')}&am=${totalPrice}&tn=${currentOrderId}&cu=INR`;
-  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(upiIntentUrl)}`;
-
-  const handleNextToPayment = (e: React.FormEvent) => {
+  const handleCashfreeCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
-    setStep('payment');
-  };
-
-  const handleCopyUpi = () => {
-    navigator.clipboard.writeText(masterUpiId);
-    setCopiedUpi(true);
-    setTimeout(() => setCopiedUpi(false), 2000);
-  };
-
-  const handleConfirmPayment = async () => {
     setSubmitting(true);
-    const newOrderId = currentOrderId;
+    
+    try {
+      const res = await fetch('/api/checkout/cashfree', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          product_id: product.id,
+          selectedVariant,
+          buyer_name: name,
+          buyer_email: email,
+          buyer_phone: phone,
+          shipping_address: isPhysical ? `${address}, PIN: ${pincode}` : null,
+        })
+      });
 
-    const { error } = await supabase.from('orders').insert({
-      creator_id: product.creator_id,
-      product_id: product.id,
-      amount: totalPrice,
-      status: 'pending', // Key difference: starts as pending!
-      buyer_name: name,
-      buyer_email: email,
-      buyer_phone: phone,
-      shipping_address: isPhysical ? `${address}, PIN: ${pincode}` : null,
-      payment_method: 'manual_upi',
-      selected_variant: selectedVariant || null,
-      utr_ref: newOrderId, // We can reuse utr_ref just to store the unique order id if we want
-    });
+      const data = await res.json();
+      
+      if (!res.ok) {
+        console.error('Checkout API error:', data);
+        const errMsg = data.details?.message || data.error || 'Failed to initialize payment';
+        throw new Error(errMsg);
+      }
 
-    if (error) {
-      console.error('Order creation failed:', error);
-      alert('Failed to record order: ' + error.message);
+      if (data.payment_session_id) {
+        // Load Cashfree SDK
+        const loadCashfree = async () => {
+          return new Promise((resolve, reject) => {
+            if ((window as any).Cashfree) return resolve((window as any).Cashfree);
+            const script = document.createElement('script');
+            script.src = 'https://sdk.cashfree.com/js/v3/cashfree.js';
+            script.onload = () => {
+              const cf = (window as any).Cashfree({ mode: 'production' }); // or sandbox based on env
+              resolve(cf);
+            };
+            script.onerror = reject;
+            document.head.appendChild(script);
+          });
+        };
+
+        const cf: any = await loadCashfree();
+        
+        cf.checkout({
+          paymentSessionId: data.payment_session_id,
+          returnUrl: `${window.location.origin}/${product.creator_id}/product/${product.id}?success=true&order_ref=${data.order_id}`
+        });
+
+      } else {
+        throw new Error('No payment session received');
+      }
+    } catch (err: any) {
+      console.error(err);
+      alert(err.message || 'Payment failed to initialize. Please try again.');
       setSubmitting(false);
-      return;
     }
-
-    setOrderId(newOrderId);
-    setSubmitting(false);
-    setStep('success');
   };
 
   return (
@@ -153,9 +165,9 @@ export default function CheckoutModal({ product, selectedVariant, onClose, initi
         {/* Modal Body */}
         <div style={{ padding: '24px' }}>
 
-          {/* STEP 1: BUYER DETAILS */}
+          {/* STEP 1: BUYER DETAILS (Cashfree) */}
           {step === 'details' && (
-            <form onSubmit={handleNextToPayment} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <form onSubmit={handleCashfreeCheckout} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <div>
                 <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, marginBottom: '6px', color: 'var(--text-secondary)' }}>Full Name</label>
                 <input required value={name} onChange={e => setName(e.target.value)} type="text" placeholder="Rahul Sharma" className="input-field" />
@@ -185,105 +197,33 @@ export default function CheckoutModal({ product, selectedVariant, onClose, initi
                 </>
               )}
 
-              <button type="submit" className="btn-primary" style={{ width: '100%', padding: '16px', borderRadius: '100px', fontSize: '0.95rem', gap: '8px', marginTop: '8px' }}>
-                <span>Continue to Payment</span>
-                <ArrowRight size={18} />
+              <button type="submit" disabled={submitting} className="btn-lime" style={{ width: '100%', padding: '16px', borderRadius: '100px', fontSize: '0.95rem', gap: '8px', marginTop: '8px', opacity: submitting ? 0.7 : 1, cursor: submitting ? 'not-allowed' : 'pointer', justifyContent: 'center' }}>
+                {submitting ? (
+                  <>
+                    <div style={{ width: 18, height: 18, border: '2px solid #000', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
+                    <span>Processing...</span>
+                  </>
+                ) : (
+                  <>
+                    <Lock size={18} />
+                    <span>Pay ₹{totalPrice.toLocaleString('en-IN')} Securely</span>
+                  </>
+                )}
               </button>
             </form>
-          )}
-
-          {/* STEP 2: PAYMENT & APPROVAL */}
-          {step === 'payment' && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              <div style={{ padding: '20px', backgroundColor: '#f0ffd4', borderRadius: '20px', border: '1.5px solid #c8f135', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
-                
-                {/* Dynamic QR Code */}
-                <div style={{ backgroundColor: '#fff', padding: '12px', borderRadius: '16px', border: '1px solid #d1d5db', boxShadow: '0 4px 14px rgba(0,0,0,0.06)' }}>
-                  <img src={qrCodeUrl} alt="Scan UPI QR Code" style={{ width: '160px', height: '160px', borderRadius: '8px' }} />
-                </div>
-                <span style={{ fontSize: '0.82rem', fontWeight: 800, color: '#3a6600' }}>Scan QR or click your preferred app below on mobile:</span>
-
-                {/* 1-Tap Mobile UPI Intent App Buttons */}
-                <div style={{ width: '100%', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
-                  <a 
-                    href={`intent://pay?pa=${masterUpiId}&pn=ProfitupX_Store&am=${totalPrice}&tn=${currentOrderId}&cu=INR#Intent;scheme=upi;package=com.google.android.apps.nbu.paisa.user;end`}
-                    style={{ 
-                      padding: '12px', borderRadius: '12px', backgroundColor: '#ffffff', color: '#1a73e8', 
-                      border: '1.5px solid #4285f4', fontSize: '0.82rem', fontWeight: 800, textDecoration: 'none',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px'
-                    }}
-                  >
-                    <span>Google Pay</span>
-                  </a>
-
-                  <a 
-                    href={`intent://pay?pa=${masterUpiId}&pn=ProfitupX_Store&am=${totalPrice}&tn=${currentOrderId}&cu=INR#Intent;scheme=upi;package=com.phonepe.app;end`}
-                    style={{ 
-                      padding: '12px', borderRadius: '12px', backgroundColor: '#ffffff', color: '#5f259f', 
-                      border: '1.5px solid #5f259f', fontSize: '0.82rem', fontWeight: 800, textDecoration: 'none',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px'
-                    }}
-                  >
-                    <span>PhonePe</span>
-                  </a>
-
-                  <a 
-                    href={upiIntentUrl}
-                    style={{ 
-                      gridColumn: 'span 2',
-                      padding: '12px', borderRadius: '12px', backgroundColor: '#0a0a0a', color: '#c8f135', 
-                      border: '1.5px solid #0a0a0a', fontSize: '0.82rem', fontWeight: 800, textDecoration: 'none',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px'
-                    }}
-                  >
-                    <span>Pay via Any UPI App →</span>
-                  </a>
-                </div>
-
-                {/* Master UPI ID Box */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', backgroundColor: '#fff', padding: '8px 14px', borderRadius: '100px', border: '1px solid #d1d5db', marginTop: '4px' }}>
-                  <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#111' }}>UPI ID: {masterUpiId}</span>
-                  <button type="button" onClick={handleCopyUpi} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#16a34a', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.75rem', fontWeight: 800 }}>
-                    {copiedUpi ? <Check size={14} /> : <Copy size={14} />}
-                    {copiedUpi ? 'Copied' : 'Copy'}
-                  </button>
-                </div>
-              </div>
-
-              <div style={{ padding: '16px', backgroundColor: '#fff8db', borderRadius: '16px', border: '1px solid #fde047' }}>
-                <p style={{ fontSize: '0.8rem', color: '#854d0e', fontWeight: 600, lineHeight: 1.5, margin: 0 }}>
-                  After completing the payment on your UPI app, click the button below. Your order will be manually verified before delivery.
-                </p>
-              </div>
-
-              <div style={{ display: 'flex', gap: '12px' }}>
-                <button type="button" onClick={() => setStep('details')} className="btn-secondary" style={{ flex: 1, padding: '14px', borderRadius: '100px', fontSize: '0.9rem' }}>
-                  Back
-                </button>
-                <button type="button" onClick={handleConfirmPayment} disabled={submitting} className="btn-lime" style={{ flex: 2, padding: '14px', borderRadius: '100px', fontSize: '0.95rem', gap: '8px', justifyContent: 'center' }}>
-                  {submitting ? 'Processing...' : 'I Have Paid'}
-                </button>
-              </div>
-            </div>
           )}
 
           {/* STEP 3: ORDER SUCCESS CONFIRMATION */}
           {step === 'success' && (
             <div style={{ textAlign: 'center', padding: '20px 0', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
-              <div style={{ width: 64, height: 64, borderRadius: '50%', backgroundColor: '#fff8db', color: '#eab308', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Clock size={32} />
+              <div style={{ width: 64, height: 64, borderRadius: '50%', backgroundColor: '#f0ffd4', color: '#16a34a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <CheckCircle2 size={36} />
               </div>
 
               <div>
-                <h3 style={{ fontSize: '1.4rem', fontWeight: 900, marginBottom: '6px' }}>Order Pending Verification</h3>
+                <h3 style={{ fontSize: '1.4rem', fontWeight: 900, marginBottom: '6px' }}>Order Placed Successfully!</h3>
                 <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)' }}>
-                  Thank you, <strong style={{ color: 'var(--foreground)' }}>{name}</strong>! We have received your request.
-                </p>
-              </div>
-
-              <div style={{ padding: '16px', backgroundColor: '#f9fafb', borderRadius: '16px', border: '1px solid var(--border)', width: '100%', textAlign: 'left' }}>
-                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
-                  We are manually verifying your payment with our bank. Once verified (usually within a few minutes to hours), your order will be approved and you will receive an email confirmation.
+                  Thank you! Your payment has been confirmed.
                 </p>
               </div>
 
@@ -295,16 +235,30 @@ export default function CheckoutModal({ product, selectedVariant, onClose, initi
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', color: 'var(--text-muted)' }}>
                   <span>Payment Method</span>
-                  <span style={{ fontWeight: 800, color: '#16a34a' }}>Direct UPI</span>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)' }}>
-                  <span>Update Sent To</span>
-                  <span style={{ fontWeight: 700, color: 'var(--foreground)' }}>{email}</span>
+                  <span style={{ fontWeight: 800, color: '#16a34a' }}>Online Payment</span>
                 </div>
               </div>
 
+              {!isPhysical ? (
+                <div style={{ padding: '16px', backgroundColor: '#f0fdf4', borderRadius: '16px', border: '1px solid #bbf7d0', width: '100%', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <Download size={24} style={{ color: '#16a34a', flexShrink: 0 }} />
+                  <div style={{ textAlign: 'left' }}>
+                    <div style={{ fontWeight: 800, fontSize: '0.88rem', color: '#166534' }}>Digital Download Unlocked</div>
+                    <div style={{ fontSize: '0.78rem', color: '#15803d' }}>Download access link has been dispatched to your email.</div>
+                  </div>
+                </div>
+              ) : (
+                <div style={{ padding: '14px', backgroundColor: '#e0f2fe', borderRadius: '16px', border: '1px solid #bae6fd', width: '100%', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <Truck size={22} style={{ color: '#0284c7', flexShrink: 0 }} />
+                  <div style={{ textAlign: 'left' }}>
+                    <div style={{ fontWeight: 800, fontSize: '0.88rem', color: '#0369a1' }}>Dispatching to Address</div>
+                    <div style={{ fontSize: '0.78rem', color: '#0284c7' }}>Expected delivery in 3-5 business days.</div>
+                  </div>
+                </div>
+              )}
+
               <button type="button" onClick={onClose} className="btn-primary" style={{ width: '100%', padding: '14px', borderRadius: '100px', fontSize: '0.92rem', marginTop: '10px' }}>
-                Return to Store
+                Done & Return to Store
               </button>
             </div>
           )}
@@ -314,7 +268,7 @@ export default function CheckoutModal({ product, selectedVariant, onClose, initi
         {/* Security Footer */}
         <div style={{ padding: '14px 24px', backgroundColor: '#fafafa', borderTop: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>
           <Lock size={12} />
-          <span>Secure 100% Direct UPI Payout</span>
+          <span>Secured by Cashfree Payments</span>
         </div>
 
       </div>
