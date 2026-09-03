@@ -17,6 +17,10 @@ export default function SettingsPage() {
   const [bio, setBio] = useState('');
   const [avatarUrl, setAvatarUrl] = useState('');
   const [upiId, setUpiId] = useState('');
+  const [bankName, setBankName] = useState('');
+  const [bankAccountNo, setBankAccountNo] = useState('');
+  const [bankIfsc, setBankIfsc] = useState('');
+  const [isVerified, setIsVerified] = useState(false);
   
   const supabase = createClient();
 
@@ -39,6 +43,10 @@ export default function SettingsPage() {
         setBio(data.bio || '');
         setAvatarUrl(data.avatar_url || '');
         setUpiId(data.upi_id || '');
+        setBankName(data.bank_name || '');
+        setBankAccountNo(data.bank_account_no || '');
+        setBankIfsc(data.bank_ifsc || '');
+        setIsVerified(data.is_verified || false);
       }
       setLoading(false);
     }
@@ -57,6 +65,9 @@ export default function SettingsPage() {
         bio,
         avatar_url: avatarUrl,
         upi_id: upiId,
+        bank_name: bankName || null,
+        bank_account_no: bankAccountNo || null,
+        bank_ifsc: bankIfsc || null,
       })
       .eq('id', creatorId);
       
@@ -196,6 +207,37 @@ export default function SettingsPage() {
               <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '6px' }}>
                 ProfitupX will send your 95% earnings to this UPI ID.
               </p>
+            </div>
+
+            {/* Optional Bank Account Details */}
+            <div style={{ padding: '20px', backgroundColor: 'var(--surface-2)', borderRadius: '18px', border: '1px dashed var(--border)', display: 'grid', gap: '16px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <h3 style={{ fontSize: '0.95rem', fontWeight: 800, margin: 0 }}>Direct Bank Account (Optional)</h3>
+                {isVerified ? (
+                  <span style={{ fontSize: '0.72rem', backgroundColor: '#dcfce7', color: '#166534', padding: '3px 8px', borderRadius: '100px', fontWeight: 800 }}>
+                    ✓ Verified Seller
+                  </span>
+                ) : (
+                  <span style={{ fontSize: '0.72rem', backgroundColor: '#fef3c7', color: '#92400e', padding: '3px 8px', borderRadius: '100px', fontWeight: 800 }}>
+                    Verification Pending
+                  </span>
+                )}
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }}>
+                <div>
+                  <label style={{ display: 'block', marginBottom: '6px', fontWeight: 700, fontSize: '0.78rem', color: 'var(--text-secondary)' }}>Bank Name</label>
+                  <input value={bankName} onChange={e => setBankName(e.target.value)} type="text" placeholder="HDFC, SBI, ICICI..." className="input-field" style={{ backgroundColor: '#fff' }} />
+                </div>
+                <div>
+                  <label style={{ display: 'block', marginBottom: '6px', fontWeight: 700, fontSize: '0.78rem', color: 'var(--text-secondary)' }}>Account Number</label>
+                  <input value={bankAccountNo} onChange={e => setBankAccountNo(e.target.value)} type="text" placeholder="1234567890" className="input-field" style={{ backgroundColor: '#fff' }} />
+                </div>
+                <div>
+                  <label style={{ display: 'block', marginBottom: '6px', fontWeight: 700, fontSize: '0.78rem', color: 'var(--text-secondary)' }}>IFSC Code</label>
+                  <input value={bankIfsc} onChange={e => setBankIfsc(e.target.value.toUpperCase())} type="text" placeholder="HDFC0001234" className="input-field" style={{ backgroundColor: '#fff' }} />
+                </div>
+              </div>
             </div>
 
             <div>

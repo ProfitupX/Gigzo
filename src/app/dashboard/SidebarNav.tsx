@@ -11,13 +11,15 @@ import {
   Settings,
   ExternalLink,
   LogOut,
-  ShoppingCart
+  ShoppingCart,
+  Sparkles
 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 
 const navItems = [
   { href: '/dashboard', icon: LayoutDashboard, label: 'Overview', exact: true },
+  { href: '/dashboard/ai-assistant', icon: Sparkles, label: 'AI Voice Studio', exact: false, isSpecial: true },
   { href: '/dashboard/orders', icon: ShoppingCart, label: 'Orders', exact: false },
   { href: '/dashboard/products', icon: Package, label: 'Products', exact: false },
   { href: '/dashboard/analytics', icon: TrendingUp, label: 'Analytics', exact: false },

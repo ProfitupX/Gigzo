@@ -21,6 +21,7 @@ interface Creator {
   bio: string | null;
   avatar_url: string | null;
   store_link: string | null;
+  is_verified?: boolean;
 }
 
 interface StorefrontClientProps {
@@ -56,10 +57,40 @@ export default function StorefrontClient({ creator, products }: StorefrontClient
       <div style={{ padding: '16px 20px', position: 'sticky', top: 0, backgroundColor: '#ffffff', zIndex: 50 }}>
         
         {/* Top Row: Brand & Icons */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-          <h1 style={{ fontSize: '1.8rem', fontWeight: 900, letterSpacing: '-0.05em', margin: 0, textTransform: 'lowercase' }}>
-            {creator.brand_name.replace(/\s+/g, '')}
-          </h1>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <h1 style={{ fontSize: '1.7rem', fontWeight: 900, letterSpacing: '-0.05em', margin: 0, textTransform: 'lowercase' }}>
+                {creator.brand_name.replace(/\s+/g, '')}
+              </h1>
+              {creator.is_verified && (
+                <span title="On-Chain KYC Verified" style={{ display: 'inline-flex', alignItems: 'center' }}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="#16a34a">
+                    <path d="M12 2L15.09 5.09L19.45 5.73L20.09 10.09L23.18 13.18L21.09 17.09L21.73 21.45L17.37 22.09L14.28 25.18L10.37 23.09L6.01 23.73L5.37 19.37L2.28 16.28L4.37 12.37L3.73 8.01L8.09 7.37L11.18 4.28L12 2Z" transform="scale(0.8) translate(1,1)" fill="#16a34a" />
+                    <path d="M9 12L11 14L15 10" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </span>
+              )}
+            </div>
+
+            {/* Escrow Protected & Verified Seal */}
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '4px',
+              fontSize: '0.68rem',
+              fontWeight: 800,
+              color: '#166534',
+              backgroundColor: '#f0fdf4',
+              padding: '2px 8px',
+              borderRadius: '100px',
+              border: '1px solid #bbf7d0',
+              marginTop: '4px'
+            }}>
+              <span>🛡️ 100% Escrow Protected Store</span>
+            </div>
+          </div>
+
           <div style={{ display: 'flex', gap: '12px' }}>
             <button style={{ width: '40px', height: '40px', borderRadius: '12px', border: '1px solid var(--border)', backgroundColor: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Heart size={20} />

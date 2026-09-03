@@ -8,6 +8,8 @@ import ReviewsSection from './ReviewsSection';
 import ShareButton from './ShareButton';
 import { ArrowLeft, Star } from 'lucide-react';
 
+import { parseProductVariants } from '@/lib/variantUtils';
+
 export const revalidate = 60;
 
 export async function generateMetadata({ params }: { params: Promise<{ product_id: string }> }): Promise<Metadata> {
@@ -48,8 +50,8 @@ export default async function ProductPage({ params }: { params: Promise<{ creato
     .eq(isUUID ? 'id' : 'store_link', resolvedParams.creator_id)
     .single();
 
-  // Parse variants
-  const variantsList = product.variants ? product.variants.split(',').map((s: string) => s.trim()).filter(Boolean) : [];
+  // Parse variants cleanly using universal variant parser
+  const variantsList = parseProductVariants(product.variants, Number(product.price) || 0);
 
   return (
     <div style={{ backgroundColor: '#f3f4f6', minHeight: '100vh', display: 'flex', justifyContent: 'center' }}>

@@ -52,6 +52,24 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: true });
     }
 
+    if (action === 'refund_order') {
+      const { error } = await supabase.from('orders').update({ status: 'refunded' }).eq('id', id);
+      if (error) throw error;
+      return NextResponse.json({ success: true });
+    }
+
+    if (action === 'verify_seller') {
+      const { error } = await supabase.from('creators').update({ is_verified: true }).eq('id', id);
+      if (error) throw error;
+      return NextResponse.json({ success: true });
+    }
+
+    if (action === 'unverify_seller') {
+      const { error } = await supabase.from('creators').update({ is_verified: false }).eq('id', id);
+      if (error) throw error;
+      return NextResponse.json({ success: true });
+    }
+
     return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
   } catch (error: any) {
     console.error('Admin Action Error:', error);

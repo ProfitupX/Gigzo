@@ -18,18 +18,13 @@ export async function GET(request: Request) {
       { data: products, count: productCount },
       payoutsResult,
     ] = await Promise.all([
-      supabase.from('creators').select('id, brand_name, store_link, avatar_url, created_at, upi_id', { count: 'exact' }).order('created_at', { ascending: false }),
+      supabase.from('creators').select('*', { count: 'exact' }).order('created_at', { ascending: false }),
       supabase.from('orders').select('id, amount, status, created_at, buyer_name, creator_id').order('created_at', { ascending: false }),
       supabase.from('products').select('id, title, price, creator_id, created_at', { count: 'exact' }),
       supabase.from('payouts').select('creator_id, amount'),
     ]);
 
-    let finalCreators: any[] = creators || [];
-    if (finalCreators.length === 0) {
-      const fallback = await supabase.from('creators').select('id, brand_name, store_link, avatar_url, created_at', { count: 'exact' }).order('created_at', { ascending: false });
-      finalCreators = fallback.data || [];
-    }
-
+    const finalCreators: any[] = creators || [];
     const safePayouts = payoutsResult?.data || [];
 
     const totalRevenue = orders?.reduce((sum, o) => sum + (Number(o.amount) || 0), 0) || 0;
@@ -38,7 +33,7 @@ export async function GET(request: Request) {
 
     const revenueByCreator: Record<string, number> = {};
     orders?.forEach(o => {
-      if (o.status === 'paid') {
+      if (o.status === 'paid' || o.status === 'pending') {
         revenueByCreator[o.creator_id] = (revenueByCreator[o.creator_id] || 0) + Number(o.amount);
       }
     });

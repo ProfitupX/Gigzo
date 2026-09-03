@@ -134,16 +134,16 @@ export default function AdminOrdersPage() {
                 <span style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>{getCreatorName(order.creator_id)}</span>
                 <span style={{ color: '#0a0a0a', fontWeight: 800, fontSize: '0.9rem' }}>₹{Number(order.amount).toLocaleString('en-IN')}</span>
                 <span style={{ color: 'var(--text-secondary)', fontSize: '0.8rem', fontWeight: 500 }}>{new Date(order.created_at).toLocaleDateString('en-IN')}</span>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
                   <span style={{
                     display: 'inline-flex', alignItems: 'center', gap: '5px',
                     fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em',
-                    color: order.status === 'paid' ? '#16a34a' : '#d97706',
-                    backgroundColor: order.status === 'paid' ? '#dcfce7' : '#fef3c7',
+                    color: order.status === 'paid' ? '#16a34a' : order.status === 'disputed' ? '#dc2626' : '#d97706',
+                    backgroundColor: order.status === 'paid' ? '#dcfce7' : order.status === 'disputed' ? '#fee2e2' : '#fef3c7',
                     padding: '4px 10px', borderRadius: '100px', width: 'fit-content',
                   }}>
-                    {order.status === 'paid' ? <CheckCircle2 size={12} /> : <Clock size={12} />}
-                    {order.status}
+                    {order.status === 'paid' ? <CheckCircle2 size={12} /> : order.status === 'disputed' ? '🚨' : <Clock size={12} />}
+                    {order.status === 'disputed' ? 'DISPUTED (FROZEN)' : order.status}
                   </span>
                   
                   {order.status === 'pending' && (
@@ -170,6 +170,67 @@ export default function AdminOrdersPage() {
                       Approve
                     </button>
                   )}
+
+                  {order.status === 'disputed' && (
+                    <div style={{ display: 'flex', gap: '6px' }}>
+                      <button
+                        onClick={async () => {
+                          if (!confirm(`Refund 100% (₹${order.amount}) to buyer? This will mark order as refunded.`)) return;
+                          const res = await fetch('/api/admin/action', {
+                            method: 'POST', headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ action: 'refund_order', id: order.id })
+                          });
+                          if (res.ok) {
+                            setOrders(orders.map(o => o.id === order.id ? { ...o, status: 'refunded' } : o));
+                            alert('Order marked as Refunded!');
+                          }
+                        }}
+                        style={{
+                          padding: '5px 10px',
+                          backgroundColor: '#dc2626', color: '#ffffff',
+                          border: 'none', borderRadius: '100px',
+                          fontSize: '0.72rem', fontWeight: 800, cursor: 'pointer',
+                        }}
+                      >
+                        Refund
+                      </button>
+
+                      <button
+                        onClick={async () => {
+                          if (!confirm('Dismiss dispute and restore order as Paid?')) return;
+                          const res = await fetch('/api/admin/action', {
+                            method: 'POST', headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ action: 'approve_order', id: order.id })
+                          });
+                          if (res.ok) {
+                            setOrders(orders.map(o => o.id === order.id ? { ...o, status: 'paid' } : o));
+                          }
+                        }}
+                        style={{
+                          padding: '5px 10px',
+                          backgroundColor: '#f1f5f9', color: '#0f172a',
+                          border: '1px solid #cbd5e1', borderRadius: '100px',
+                          fontSize: '0.72rem', fontWeight: 800, cursor: 'pointer',
+                        }}
+                      >
+                        Dismiss
+                      </button>
+                    </div>
+                  )}
+
+                  <a
+                    href={`/order/${order.id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      fontSize: '0.72rem',
+                      color: '#4f46e5',
+                      fontWeight: 700,
+                      textDecoration: 'underline'
+                    }}
+                  >
+                    View Receipt
+                  </a>
                 </div>
               </div>
             ))}

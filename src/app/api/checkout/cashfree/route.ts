@@ -22,17 +22,34 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Product not found' }, { status: 404 });
     }
 
-    const itemPrice = Number(product.price) || 0;
+    let basePrice = Number(product.price) || 0;
+    let itemPrice = basePrice;
+
+    if (selectedVariant) {
+      const priceMatch = String(selectedVariant).match(/₹\s*(\d+)/);
+      if (priceMatch) {
+        itemPrice = Number(priceMatch[1]);
+      } else {
+        const cleanName = String(selectedVariant).replace(/\s*\(.*?\)/, '').trim();
+        const { parseProductVariants } = await import('@/lib/variantUtils');
+        const parsedVariants = parseProductVariants(product.variants, basePrice);
+        const matched = parsedVariants.find(v => v.name.toLowerCase() === cleanName.toLowerCase());
+        if (matched && matched.price !== undefined) {
+          itemPrice = matched.price;
+        }
+      }
+    }
+
     const shippingFee = product.is_physical ? (Number(product.shipping_fee) || 0) : 0;
     const totalPrice = itemPrice + shippingFee;
 
     // 2. Create Order in Supabase as PENDING
-    const orderRef = `ORD_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
+    const orderUuid = crypto.randomUUID();
 
     const { error: insertError } = await supabase
       .from('orders')
       .insert({
-        id: orderRef,
+        id: orderUuid,
         creator_id: product.creator_id,
         product_id: product.id,
         amount: totalPrice,
@@ -47,7 +64,10 @@ export async function POST(request: Request) {
 
     if (insertError) {
       console.error('Order Insert Error:', insertError);
-      return NextResponse.json({ error: 'Failed to create order record' }, { status: 500 });
+      return NextResponse.json({ 
+        error: 'Failed to create order record',
+        details: { message: insertError.message, code: insertError.code, hint: insertError.hint }
+      }, { status: 500 });
     }
 
     // 3. Initialize Cashfree Order
@@ -62,18 +82,23 @@ export async function POST(request: Request) {
     const baseUrl = isProd ? 'https://api.cashfree.com/pg' : 'https://sandbox.cashfree.com/pg';
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://profitupx.com';
 
+    // Clean phone number (extract 10 digits)
+    const rawPhoneDigits = buyer_phone.replace(/[^0-9]/g, '');
+    const cleanPhone = rawPhoneDigits.length >= 10 ? rawPhoneDigits.slice(-10) : '9999999999';
+    const cleanCustomerId = `CUST_${rawPhoneDigits.slice(-10) || 'GUEST'}`;
+
     const payload = {
-      order_id: orderRef,
+      order_id: orderUuid,
       order_amount: totalPrice,
       order_currency: 'INR',
       customer_details: {
-        customer_id: buyer_phone.substring(0, 15) || 'GUEST',
-        customer_phone: buyer_phone,
+        customer_id: cleanCustomerId,
+        customer_phone: cleanPhone,
         customer_email: buyer_email,
         customer_name: buyer_name
       },
       order_meta: {
-        return_url: `${siteUrl}/${product.creator_id}/product/${product_id}?success=true&order_id={order_id}`,
+        return_url: `${siteUrl}/${product.creator_id}/product/${product_id}?success=true&order_id=${orderUuid}`,
         notify_url: `${siteUrl}/api/webhooks/cashfree`
       }
     };

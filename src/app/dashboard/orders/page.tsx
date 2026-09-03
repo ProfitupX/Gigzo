@@ -2,12 +2,16 @@
 
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
-import { ShoppingCart, Package, ExternalLink, Calendar, MapPin, Receipt, Search, Clock, CheckCircle2 } from 'lucide-react';
+import { ShoppingCart, Package, ExternalLink, Calendar, MapPin, Receipt, Search, Clock, CheckCircle2, Truck, Camera } from 'lucide-react';
+import OrderDispatchModal3D from '@/components/dashboard/OrderDispatchModal3D';
+import WipUploadModal from '@/components/dashboard/WipUploadModal';
 
 export default function OrdersPage() {
   const [orders, setOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [dispatchingOrder, setDispatchingOrder] = useState<any>(null);
+  const [wipOrder, setWipOrder] = useState<any>(null);
   const supabase = createClient();
 
   useEffect(() => {
@@ -167,20 +171,90 @@ export default function OrdersPage() {
                   )}
                 </div>
 
+                {/* 48-Hour Buyer Protection & Escrow Window Strip */}
+                <div style={{
+                  padding: '10px 16px',
+                  backgroundColor: '#f8fafc',
+                  borderRadius: '12px',
+                  border: '1px solid #e2e8f0',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  flexWrap: 'wrap',
+                  gap: '8px',
+                  fontSize: '0.78rem'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#475569', fontWeight: 700 }}>
+                    <span style={{ fontSize: '0.9rem' }}>🛡️</span>
+                    <span><strong>48-Hour ProfitupX Buyer Protection Policy:</strong> Funds held in Escrow Vault. Safe Payout release after 48 hours without disputes.</span>
+                  </div>
+                  <span style={{
+                    backgroundColor: '#dbeafe',
+                    color: '#1e40af',
+                    padding: '3px 10px',
+                    borderRadius: '100px',
+                    fontWeight: 800,
+                    fontSize: '0.72rem'
+                  }}>
+                    ESCROW PROTECTED
+                  </span>
+                </div>
+
                 {/* Footer Actions */}
-                <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', borderTop: '1px solid var(--border)', paddingTop: '16px' }}>
-                  {order.status === 'paid' && order.products?.is_physical && (
+                <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '12px', borderTop: '1px solid var(--border)', paddingTop: '16px', flexWrap: 'wrap' }}>
+                  
+                  {/* Custom Milestone WIP Upload Button (ONLY FOR ₹10,000+ HIGH-TICKET CUSTOM ORDERS) */}
+                  {(Number(order.amount) >= 10000 || order.products?.is_custom_order || order.status.startsWith('wip_')) && (order.status === 'paid' || order.status === 'pending') && (
+                    <button
+                      onClick={() => setWipOrder(order)}
+                      style={{
+                        padding: '10px 18px',
+                        borderRadius: '100px',
+                        backgroundColor: '#070d19',
+                        color: '#38bdf8',
+                        border: '1.5px solid #38bdf8',
+                        fontSize: '0.82rem',
+                        fontWeight: 800,
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '6px'
+                      }}
+                    >
+                      <Camera size={15} /> 📸 Upload WIP Proof (Phase 2)
+                    </button>
+                  )}
+
+                  {order.status === 'wip_submitted' && (
+                    <span style={{ fontSize: '0.78rem', color: '#0284c7', backgroundColor: '#e0f2fe', padding: '4px 12px', borderRadius: '100px', fontWeight: 800 }}>
+                      ⏳ WIP Proof Sent • Waiting for Buyer Approval
+                    </span>
+                  )}
+
+                  {order.status === 'wip_approved' && (
+                    <span style={{ fontSize: '0.78rem', color: '#16a34a', backgroundColor: '#dcfce7', padding: '4px 12px', borderRadius: '100px', fontWeight: 800 }}>
+                      ✅ WIP Approved by Buyer • Phase 2 (40%) Unlocked
+                    </span>
+                  )}
+
+                  {order.status === 'wip_rejected' && (
+                    <span style={{ fontSize: '0.78rem', color: '#dc2626', backgroundColor: '#fee2e2', padding: '4px 12px', borderRadius: '100px', fontWeight: 800 }}>
+                      ❌ WIP Rejected by Buyer • Seller Retains 30% Advance
+                    </span>
+                  )}
+
+                  {(order.status === 'paid' || order.status === 'wip_approved') && order.products?.is_physical && (
                     <button 
-                      onClick={() => handleUpdateStatus(order.id, 'fulfilled')}
+                      onClick={() => setDispatchingOrder(order)}
                       className="btn-lime" 
                       style={{ padding: '10px 20px', borderRadius: '100px', fontSize: '0.85rem', gap: '6px' }}
                     >
-                      <Package size={16} /> Mark as Fulfilled / Shipped
+                      <Truck size={16} /> 3D Dispatch Package
                     </button>
                   )}
                   {order.status === 'fulfilled' && (
                     <div style={{ color: '#16a34a', fontWeight: 800, fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <CheckCircle2 size={16} /> Order Fulfilled
+                      <CheckCircle2 size={16} /> Order Fulfilled / Shipped
                     </div>
                   )}
                 </div>
@@ -190,6 +264,44 @@ export default function OrdersPage() {
           </div>
         )}
       </div>
+
+      {/* 3D Order Dispatch Modal */}
+      {dispatchingOrder && (
+        <OrderDispatchModal3D
+          isOpen={!!dispatchingOrder}
+          onClose={() => setDispatchingOrder(null)}
+          orderId={dispatchingOrder.id}
+          buyerName={dispatchingOrder.buyer_name || 'Customer'}
+          itemTitle={dispatchingOrder.products?.title || 'Product Item'}
+          onConfirmDispatch={async (orderId, trackingNumber) => {
+            const { error } = await supabase
+              .from('orders')
+              .update({ 
+                status: 'fulfilled',
+                utr_ref: dispatchingOrder.utr_ref ? `${dispatchingOrder.utr_ref} [${trackingNumber}]` : trackingNumber
+              })
+              .eq('id', orderId);
+
+            if (!error) {
+              fetchOrders();
+              return true;
+            }
+            return false;
+          }}
+        />
+      )}
+
+      {/* Seller WIP Upload Modal */}
+      {wipOrder && (
+        <WipUploadModal
+          isOpen={!!wipOrder}
+          onClose={() => setWipOrder(null)}
+          orderId={wipOrder.id}
+          itemTitle={wipOrder.products?.title || 'Custom Product'}
+          totalAmount={Number(wipOrder.amount) || 0}
+          onWipSubmitted={fetchOrders}
+        />
+      )}
     </div>
   );
 }

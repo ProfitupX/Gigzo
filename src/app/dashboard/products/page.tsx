@@ -65,6 +65,23 @@ export default function ProductsPage() {
     fetchProductsAndCategories();
   }, []);
 
+  const formatVariantsForInput = (v: any) => {
+    if (!v) return '';
+    if (typeof v === 'string') {
+      try {
+        const parsed = JSON.parse(v);
+        if (Array.isArray(parsed)) {
+          return parsed.map((p: any) => p.price ? `${p.name} - ₹${p.price}` : p.name).join(', ');
+        }
+      } catch (e) {}
+      return v;
+    }
+    if (Array.isArray(v)) {
+      return v.map((p: any) => p.price ? `${p.name} - ₹${p.price}` : p.name).join(', ');
+    }
+    return String(v);
+  };
+
   const handleEditClick = (product: any) => {
     setEditingProductId(product.id);
     setTitle(product.title || '');
@@ -75,7 +92,7 @@ export default function ProductsPage() {
     setStock(product.stock?.toString() || '10');
     setShippingFee(product.shipping_fee?.toString() || '0');
     setShippingDays(product.shipping_days || '3-5 Days');
-    setVariants(product.variants || '');
+    setVariants(formatVariantsForInput(product.variants));
     setFiles([]); // Note: Existing images are kept in DB unless overwritten
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };

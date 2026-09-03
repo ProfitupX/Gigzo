@@ -17,6 +17,8 @@ import {
   CheckCircle2
 } from 'lucide-react';
 
+import Revenue3DVault from '@/components/dashboard/Revenue3DVault';
+
 export default async function DashboardOverview() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
@@ -68,6 +70,14 @@ export default async function DashboardOverview() {
           <span>New Product</span>
         </Link>
       </div>
+
+      {/* 3D Real-Time Revenue & Escrow Vault Card */}
+      <Revenue3DVault 
+        totalRevenue={totalRevenue}
+        totalOrders={totalOrders}
+        pendingOrders={pendingOrders}
+        paidOrders={paidOrders}
+      />
 
       {/* Quick Action Navigation Grid */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px' }}>

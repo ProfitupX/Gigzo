@@ -1049,7 +1049,7 @@ export default function Home() {
                   { icon: <IconLink />, text: 'Unlimited digital & physical products' },
                   { icon: <IconRupee />, text: 'Real-time sales dashboard in INR' },
                   { icon: <IconZap />, text: 'Auto email delivery for digital goods' },
-                  { icon: <IconMobile />, text: 'Custom short link (gogo.to/yourname)' },
+                  { icon: <IconMobile />, text: 'Custom short link (profitupx.store/yourname)' },
                 ].map(f => (
                   <div key={f.text} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                     <div style={{ width: 32, height: 32, borderRadius: 8, background: 'rgba(200,241,53,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-lime)', flexShrink: 0 }}>
@@ -1231,7 +1231,7 @@ export default function Home() {
                   Your own website,<br/> zero coding.
                 </h3>
                 <p style={{ fontSize: '1.1rem', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '32px' }}>
-                  Get a beautiful, conversion-optimized storefront out of the box. Brand it with your colors, upload your avatar, and share your unique `gogo.store/yourname` link anywhere.
+                  Get a beautiful, conversion-optimized storefront out of the box. Brand it with your colors, upload your avatar, and share your unique `profitupx.store/yourname` link anywhere.
                 </p>
               </div>
               <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -1344,7 +1344,7 @@ export default function Home() {
               {
                 name: 'Arjun Mehta', handle: '@arjun.fitness', badge: 'Fitness Coach',
                 date: '3 Jul 2026', time: '07:15 PM',
-                text: 'My followers were dropping off at Shopify checkout. Switched to @gogocreate and my conversion rate jumped 3x overnight. UPI checkout is a game changer.',
+                text: 'My followers were dropping off at Shopify checkout. Switched to @profitupx and my conversion rate jumped 3x overnight. UPI checkout is a game changer.',
                 likes: 891, comments: 63, avatarBg: '#e0f2fe', avatarText: 'AM', platform: 'instagram',
               },
               {
@@ -1409,7 +1409,7 @@ export default function Home() {
               {
                 name: 'Rohan Joshi', handle: '@rohan.edu', badge: 'Educator',
                 date: '25 Jul 2026', time: '11:00 AM',
-                text: 'Launched my ₹499 PDF guide and made ₹28,000 in 3 days just from one Instagram story. @gogocreate handles everything automatically — delivery, payments, receipts. Zero setup headache.',
+                text: 'Launched my ₹499 PDF guide and made ₹28,000 in 3 days just from one Instagram story. @profitupx handles everything automatically — delivery, payments, receipts. Zero setup headache.',
                 likes: 1204, comments: 98, avatarBg: '#fef3c7', avatarText: 'RJ',
               },
               {
@@ -1542,7 +1542,7 @@ export default function Home() {
             <p style={{ color: 'var(--text-muted)', fontSize: '1rem', marginBottom: '20px' }}>
               Still have questions? We're here to help.
             </p>
-            <a href="mailto:hello@gogocreate.in" className="btn-secondary" style={{ display: 'inline-flex' }}>
+            <a href="mailto:hello@profitupx.com" className="btn-secondary" style={{ display: 'inline-flex' }}>
               Contact Support →
             </a>
           </motion.div>

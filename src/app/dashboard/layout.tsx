@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import { SidebarNav } from './SidebarNav';
 import { MobileBottomNav } from './MobileBottomNav';
+import DashboardAIWrapper from '@/components/ai/DashboardAIWrapper';
 import Link from 'next/link';
 
 export default async function DashboardLayout({
@@ -17,9 +18,9 @@ export default async function DashboardLayout({
   }
 
   // Ensure creator profile exists
-  const { data: creator } = await supabase
+  let { data: creator } = await supabase
     .from('creators')
-    .select('id, brand_name')
+    .select('id, brand_name, store_link, upi_id')
     .eq('id', user.id)
     .single();
 
@@ -28,12 +29,14 @@ export default async function DashboardLayout({
     const brandName = user.user_metadata?.full_name || 'My Store';
     const storeLink = brandName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') + '-' + randomStr;
 
-    await supabase.from('creators').insert({
+    const { data: newCreator } = await supabase.from('creators').insert({
       id: user.id,
       brand_name: brandName,
       avatar_url: user.user_metadata?.avatar_url,
       store_link: storeLink,
-    });
+    }).select().single();
+    
+    creator = newCreator;
   }
 
   const brandTitle = creator?.brand_name || user.user_metadata?.full_name || 'My Store';
@@ -118,9 +121,16 @@ export default async function DashboardLayout({
           </a>
         </header>
 
-        {/* Page Content */}
+        {/* Page Content Wrapped with AI Guardian and Voice Onboarding */}
         <main className="dashboard-main-content-inner" style={{ flex: 1, padding: '36px 40px 60px', overflowY: 'auto' }}>
-          {children}
+          <DashboardAIWrapper
+            creatorId={user.id}
+            brandName={creator?.brand_name || 'My Store'}
+            storeLink={creator?.store_link || ''}
+            upiId={creator?.upi_id || null}
+          >
+            {children}
+          </DashboardAIWrapper>
         </main>
       </div>
 
