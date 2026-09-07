@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/server';
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || '';
 
 // Fallback models in priority order
-const GEMINI_MODELS = ['gemini-flash-latest', 'gemini-3.6-flash', 'gemini-2.0-flash'];
+const GEMINI_MODELS = ['gemini-3.6-flash', 'gemini-flash-latest', 'gemini-2.5-flash'];
 
 async function callGemini(contents: any[], systemInstruction?: string) {
   let lastError: any = null;
