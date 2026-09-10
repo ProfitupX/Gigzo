@@ -1,53 +1,94 @@
 import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ShieldCheck, Mail, Phone, MapPin, Building } from 'lucide-react';
 
 export const metadata = {
   title: 'Privacy Policy | ProfitupX',
-  description: 'Privacy policy for using ProfitupX platform.',
+  description: 'Privacy policy for using ProfitupX platform operated by PANDI GANESH BABU.',
 };
 
 export default function PrivacyPage() {
   return (
     <div style={{ backgroundColor: '#fff', minHeight: '100vh', color: '#111', fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '60px 24px' }}>
-        <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: '#666', textDecoration: 'none', marginBottom: '40px', fontWeight: 600, fontSize: '0.9rem' }}>
+      {/* Top Header Nav */}
+      <header style={{ borderBottom: '1px solid #eaeaea', padding: '16px 24px', backgroundColor: '#fafafa' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
+            <img src="/icon.png" alt="ProfitupX" style={{ width: '28px', height: '28px', borderRadius: '6px' }} />
+            <span style={{ fontWeight: 900, fontSize: '1.2rem', color: '#000', letterSpacing: '-0.5px' }}>ProfitupX</span>
+          </Link>
+          <div style={{ display: 'flex', gap: '20px', fontSize: '0.88rem', fontWeight: 600 }}>
+            <Link href="/" style={{ color: '#555', textDecoration: 'none' }}>Home</Link>
+            <Link href="/about" style={{ color: '#555', textDecoration: 'none' }}>About</Link>
+            <Link href="/pricing" style={{ color: '#555', textDecoration: 'none' }}>Pricing</Link>
+            <Link href="/contact" style={{ color: '#555', textDecoration: 'none' }}>Contact</Link>
+          </div>
+        </div>
+      </header>
+
+      <div style={{ maxWidth: '850px', margin: '0 auto', padding: '50px 24px 80px' }}>
+        <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: '#666', textDecoration: 'none', marginBottom: '32px', fontWeight: 600, fontSize: '0.9rem' }}>
           <ArrowLeft size={16} /> Back to Home
         </Link>
         
-        <h1 style={{ fontSize: '2.5rem', fontWeight: 900, letterSpacing: '-0.04em', marginBottom: '40px' }}>Privacy Policy</h1>
+        <h1 style={{ fontSize: '2.4rem', fontWeight: 900, letterSpacing: '-0.04em', marginBottom: '16px', color: '#000' }}>Privacy Policy</h1>
+        <p style={{ color: '#666', fontSize: '0.95rem', marginBottom: '32px' }}>Last updated: September 10, 2026</p>
+
+        {/* Legal Merchant Notice Box */}
+        <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '24px', marginBottom: '36px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 800, color: '#0f172a', fontSize: '1rem' }}>
+            <ShieldCheck size={20} color="#0284c7" /> Legal Entity & Platform Operator
+          </div>
+          <p style={{ fontSize: '0.9rem', color: '#475569', lineHeight: 1.6, margin: 0 }}>
+            This Platform (<strong>ProfitupX</strong> - https://profitupx.com) is owned and operated by <strong>PANDI GANESH BABU</strong> (hereinafter referred to as &quot;Platform Owner&quot;, &quot;we&quot;, &quot;us&quot;, or &quot;our&quot;).
+          </p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '12px', marginTop: '8px', fontSize: '0.88rem', color: '#334155' }}>
+            <div><strong>Legal Entity Name:</strong> PANDI GANESH BABU</div>
+            <div><strong>Trade Name:</strong> ProfitupX</div>
+            <div><strong>Email:</strong> ganeshdon5555@gmail.com</div>
+            <div><strong>Contact Number:</strong> +91 8098824262</div>
+            <div style={{ gridColumn: '1 / -1' }}><strong>Registered Address:</strong> KPT Nagar, Ayyampalayam, Dindigul, Tamil Nadu - 624601, India</div>
+          </div>
+        </div>
         
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', fontSize: '0.95rem', lineHeight: 1.8, color: '#333' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '22px', fontSize: '0.95rem', lineHeight: 1.8, color: '#333' }}>
           
-          <h2 style={{ fontSize: '1.4rem', fontWeight: 800, marginTop: '20px' }}>Introduction</h2>
-          <p>This Privacy Policy describes how Profitupx and its affiliates (collectively "Profitupx, we, our, us") collect, use, share, protect or otherwise process your information/ personal data through our website https://profitupx.com (hereinafter referred to as Platform). Please note that you may be able to browse certain sections of the Platform without registering with us. We do not offer any product/service under this Platform outside India and your personal data will primarily be stored and processed in India. By visiting this Platform, providing your information or availing any product/service offered on the Platform, you expressly agree to be bound by the terms and conditions of this Privacy Policy, the Terms of Use and the applicable service/product terms and conditions, and agree to be governed by the laws of India including but not limited to the laws applicable to data protection and privacy. If you do not agree please do not use or access our Platform.</p>
+          <h2 style={{ fontSize: '1.3rem', fontWeight: 800, marginTop: '20px', color: '#000' }}>1. Introduction</h2>
+          <p>This Privacy Policy describes how <strong>PANDI GANESH BABU</strong> operating under the brand name <strong>ProfitupX</strong> (&quot;we&quot;, &quot;our&quot;, &quot;us&quot;) collects, uses, shares, protects, or otherwise processes your personal data through our website https://profitupx.com (hereinafter referred to as &apos;Platform&apos;). We are committed to protecting your privacy in accordance with applicable Indian laws, including the Information Technology Act, 2000 and the Digital Personal Data Protection Act, 2023.</p>
 
-          <h2 style={{ fontSize: '1.4rem', fontWeight: 800, marginTop: '20px' }}>Collection</h2>
-          <p>We collect your personal data when you use our Platform, services or otherwise interact with us during the course of our relationship. Some of the information that we may collect includes but is not limited to personal data / information provided to us during sign-up/registering or using our Platform such as name, date of birth, address, telephone/mobile number, email ID and/or any such information shared as proof of identity or address. Some of the sensitive personal data may be collected with your consent, such as your bank account or credit or debit card or other payment instrument information or biometric information such as your facial features or physiological information (in order to enable use of certain features when opted for, available on the Platform) etc all of the above being in accordance with applicable law(s). You always have the option to not provide information, by choosing not to use a particular service or feature on the Platform. We may track your behaviour, preferences, and other information that you choose to provide on our Platform. This information is compiled and analysed on an aggregated basis. We will also collect your information related to your transactions on Platform and such third-party business partner platforms. When such a third-party business partner collects your personal data directly from you, you will be governed by their privacy policies. We shall not be responsible for the third-party business partner’s privacy practices or the content of their privacy policies, and we request you to read their privacy policies prior to disclosing any information. If you receive an email, a call from a person/association claiming to be Profitupx seeking any personal data like debit/credit card PIN, net-banking or mobile banking password, we request you to never provide such information. If you have already revealed such information, report it immediately to an appropriate law enforcement agency.</p>
+          <h2 style={{ fontSize: '1.3rem', fontWeight: 800, marginTop: '20px', color: '#000' }}>2. Information We Collect</h2>
+          <p>When you register, create a store, or purchase items through ProfitupX, we collect the following types of information:</p>
+          <ul style={{ paddingLeft: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <li><strong>Personal Contact Data:</strong> Name, email address, mobile/phone number, billing and shipping address.</li>
+            <li><strong>Payment & Settlement Data:</strong> UPI VPA, bank account details for seller payouts (processed securely via RBI-licensed aggregators such as Cashfree).</li>
+            <li><strong>Transaction Records:</strong> Order amounts, timestamps, product purchases, and invoice records.</li>
+            <li><strong>Device & Analytics:</strong> IP address, browser type, operating system, and interaction telemetry.</li>
+          </ul>
 
-          <h2 style={{ fontSize: '1.4rem', fontWeight: 800, marginTop: '20px' }}>Usage</h2>
-          <p>We use personal data to provide the services you request. To the extent we use your personal data to market to you, we will provide you the ability to opt-out of such uses. We use your personal data to assist sellers and business partners in handling and fulfilling orders; enhancing customer experience; to resolve disputes; troubleshoot problems; inform you about online and offline offers, products, services, and updates; customise your experience; detect and protect us against error, fraud and other criminal activity; enforce our terms and conditions; conduct marketing research, analysis and surveys; and as otherwise described to you at the time of collection of information. You understand that your access to these products/services may be affected in the event permission is not provided to us.</p>
+          <h2 style={{ fontSize: '1.3rem', fontWeight: 800, marginTop: '20px', color: '#000' }}>3. How We Use Your Information</h2>
+          <p>We use your personal data to:</p>
+          <ul style={{ paddingLeft: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <li>Enable online transactions, UPI checkouts, and creator store functionality.</li>
+            <li>Facilitate instant digital order dispatch and physical product shipment updates.</li>
+            <li>Process automated seller payouts and maintain escrow compliance.</li>
+            <li>Detect, prevent, and intercept fraudulent payments, chargebacks, and scam activities.</li>
+            <li>Provide customer support and resolve order disputes.</li>
+          </ul>
 
-          <h2 style={{ fontSize: '1.4rem', fontWeight: 800, marginTop: '20px' }}>Sharing</h2>
-          <p>We may share your personal data internally within our group entities, our other corporate entities, and affiliates to provide you access to the services and products offered by them. These entities and affiliates may market to you as a result of such sharing unless you explicitly opt-out. We may disclose personal data to third parties such as sellers, business partners, third party service providers including logistics partners, prepaid payment instrument issuers, third-party reward programs and other payment opted by you. These disclosure may be required for us to provide you access to our services and products offered to you, to comply with our legal obligations, to enforce our user agreement, to facilitate our marketing and advertising activities, to prevent, detect, mitigate, and investigate fraudulent or illegal activities related to our services. We may disclose personal and sensitive personal data to government agencies or other authorised law enforcement agencies if required to do so by law or in the good faith belief that such disclosure is reasonably necessary to respond to subpoenas, court orders, or other legal process. We may disclose personal data to law enforcement offices, third party rights owners, or others in the good faith belief that such disclosure is reasonably necessary to: enforce our Terms of Use or Privacy Policy; respond to claims that an advertisement, posting or other content violates the rights of a third party; or protect the rights, property or personal safety of our users or the general public.</p>
+          <h2 style={{ fontSize: '1.3rem', fontWeight: 800, marginTop: '20px', color: '#000' }}>4. Data Security & Storage</h2>
+          <p>All sensitive information is encrypted in transit using industry-standard SSL/TLS (HTTPS) encryption. Database connections and authentication are secured using Supabase PostgreSQL with strict Row-Level Security (RLS) policies. Payment transactions are processed directly through PCI-DSS Level 1 compliant gateway partners (Cashfree Payments).</p>
 
-          <h2 style={{ fontSize: '1.4rem', fontWeight: 800, marginTop: '20px' }}>Security Precautions</h2>
-          <p>To protect your personal data from unauthorised access or disclosure, loss or misuse we adopt reasonable security practices and procedures. Once your information is in our possession or whenever you access your account information, we adhere to our security guidelines to protect it against unauthorised access and offer the use of a secure server. However, the transmission of information is not completely secure for reasons beyond our control. By using the Platform, the users accept the security implications of data transmission over the internet and the World Wide Web which cannot always be guaranteed as completely secure, and therefore, there would always remain certain inherent risks regarding use of the Platform. Users are responsible for ensuring the protection of login and password records for their account.</p>
-
-          <h2 style={{ fontSize: '1.4rem', fontWeight: 800, marginTop: '20px' }}>Data Deletion and Retention</h2>
-          <p>You have an option to delete your account by visiting your profile and settings on our Platform, this action would result in you losing all information related to your account. You may also write to us at the contact information provided below to assist you with these requests. We may in event of any pending grievance, claims, pending shipments or any other services we may refuse or delay deletion of the account. Once the account is deleted, you will lose access to the account. We retain your personal data information for a period no longer than is required for the purpose for which it was collected or as required under any applicable law. However, we may retain data related to you if we believe it may be necessary to prevent fraud or future abuse or for other legitimate purposes. We may continue to retain your data in anonymised form for analytical and research purposes.</p>
-
-          <h2 style={{ fontSize: '1.4rem', fontWeight: 800, marginTop: '20px' }}>Your Rights & Consent</h2>
-          <p>You may access, rectify, and update your personal data directly through the functionalities provided on the Platform. By visiting our Platform or by providing your information, you consent to the collection, use, storage, disclosure and otherwise processing of your information on the Platform in accordance with this Privacy Policy. If you disclose to us any personal data relating to other people, you represent that you have the authority to do so and permit us to use the information in accordance with this Privacy Policy.</p>
-          <p>You have an option to withdraw your consent that you have already provided by writing to the Grievance Officer at the contact information provided below. Please mention “Withdrawal of consent for processing personal data” in your subject line of your communication. We may verify such requests before acting on our request.</p>
-
-          <h2 style={{ fontSize: '1.4rem', fontWeight: 800, marginTop: '20px' }}>Changes to this Privacy Policy</h2>
-          <p>Please check our Privacy Policy periodically for changes. We may update this Privacy Policy to reflect changes to our information practices. We may alert / notify you about the significant changes to the Privacy Policy, in the manner as may be required under applicable laws.</p>
-
-          <h2 style={{ fontSize: '1.4rem', fontWeight: 800, marginTop: '20px' }}>Grievance Officer</h2>
-          <p>Name: Profitupx Support</p>
-          <p>Address: Kpt nagar ayyampalayam</p>
-          <p>Phone: [To be provided]</p>
-          <p>Time: Monday - Friday (9:00 - 18:00)</p>
+          <h2 style={{ fontSize: '1.3rem', fontWeight: 800, marginTop: '20px', color: '#000' }}>5. Grievance Officer & Contact Details</h2>
+          <p>In accordance with Information Technology Act 2000 and rules made there under, the name and contact details of the Grievance Officer are provided below:</p>
+          
+          <div style={{ background: '#f8fafc', padding: '20px', borderRadius: '14px', border: '1px solid #e2e8f0', fontSize: '0.9rem', lineHeight: 1.7 }}>
+            <strong>Grievance Officer Name:</strong> PANDI GANESH BABU<br />
+            <strong>Company / Trade Name:</strong> ProfitupX<br />
+            <strong>Designation:</strong> Proprietor / Platform Administrator<br />
+            <strong>Email:</strong> ganeshdon5555@gmail.com<br />
+            <strong>Phone / Mobile:</strong> +91 8098824262<br />
+            <strong>Address:</strong> KPT Nagar, Ayyampalayam, Dindigul, Tamil Nadu - 624601, India<br />
+            <strong>Working Hours:</strong> Monday – Saturday, 9:00 AM to 6:00 PM IST
+          </div>
         </div>
       </div>
     </div>

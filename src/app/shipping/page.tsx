@@ -1,12 +1,12 @@
 import Link from 'next/link';
-import { ArrowLeft, ShieldCheck, Mail, Phone, MapPin, RefreshCcw } from 'lucide-react';
+import { ArrowLeft, ShieldCheck, Truck, Mail, Phone, MapPin, PackageCheck, Clock } from 'lucide-react';
 
 export const metadata = {
-  title: 'Refund & Cancellation Policy | ProfitupX',
-  description: 'Refund, return, and cancellation policy for using ProfitupX platform operated by PANDI GANESH BABU.',
+  title: 'Shipping & Delivery Policy | ProfitupX',
+  description: 'Shipping and delivery policy for orders placed on ProfitupX platform operated by PANDI GANESH BABU.',
 };
 
-export default function RefundPage() {
+export default function ShippingPage() {
   return (
     <div style={{ backgroundColor: '#fff', minHeight: '100vh', color: '#111', fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
       {/* Top Header Nav */}
@@ -30,7 +30,7 @@ export default function RefundPage() {
           <ArrowLeft size={16} /> Back to Home
         </Link>
         
-        <h1 style={{ fontSize: '2.4rem', fontWeight: 900, letterSpacing: '-0.04em', marginBottom: '16px', color: '#000' }}>Refund & Cancellation Policy</h1>
+        <h1 style={{ fontSize: '2.4rem', fontWeight: 900, letterSpacing: '-0.04em', marginBottom: '16px', color: '#000' }}>Shipping & Delivery Policy</h1>
         <p style={{ color: '#666', fontSize: '0.95rem', marginBottom: '32px' }}>Last updated: September 10, 2026</p>
 
         {/* Legal Merchant Notice Box */}
@@ -52,40 +52,39 @@ export default function RefundPage() {
         
         <div style={{ display: 'flex', flexDirection: 'column', gap: '22px', fontSize: '0.95rem', lineHeight: 1.8, color: '#333' }}>
           
-          <h2 style={{ fontSize: '1.3rem', fontWeight: 800, marginTop: '10px', color: '#000' }}>1. Cancellation Policy</h2>
-          <p>We understand that circumstances may change. Under this policy:</p>
+          <h2 style={{ fontSize: '1.3rem', fontWeight: 800, marginTop: '10px', color: '#000' }}>1. Digital Goods & Services Delivery</h2>
+          <p>For all digital products (such as eBooks, courses, software tools, design templates, and downloadable assets) sold on ProfitupX:</p>
           <ul style={{ paddingLeft: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            <li><strong>Digital Goods / Subscriptions:</strong> Cancellation requests for digital products, templates, or courses must be made within <strong>24 hours</strong> of purchase, provided the download link or access key has not been accessed or redeemed.</li>
-            <li><strong>Physical Products:</strong> Cancellation requests can be made within <strong>24 hours</strong> of placing an order or prior to the merchant initiating dispatch/shipment. Once dispatched, orders cannot be cancelled mid-transit.</li>
-            <li>To initiate a cancellation, email us at <strong>ganeshdon5555@gmail.com</strong> or raise a dispute via your Order Tracking page (`/order/[order_id]`) quoting your Order ID.</li>
+            <li><strong>Instant Delivery:</strong> Access links and download files are delivered <strong>immediately upon successful payment</strong> on the order confirmation screen (`/order/[order_id]`).</li>
+            <li><strong>Email Dispatch:</strong> An automated confirmation email with access links and tax invoice is dispatched to the buyer&apos;s registered email address within <strong>5 minutes</strong> of transaction completion.</li>
+            <li><strong>24/7 Access:</strong> Buyers can re-download their purchased digital products at any time through their verified order link.</li>
           </ul>
 
-          <h2 style={{ fontSize: '1.3rem', fontWeight: 800, marginTop: '20px', color: '#000' }}>2. Return & Replacement Policy</h2>
-          <p>We offer return or replacement within <strong>7 days</strong> from the date of delivery under the following conditions:</p>
+          <h2 style={{ fontSize: '1.3rem', fontWeight: 800, marginTop: '20px', color: '#000' }}>2. Physical Goods Shipping & Timelines</h2>
+          <p>For physical merchandise, custom goods, or packaged items shipped across India:</p>
           <ul style={{ paddingLeft: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            <li>The item delivered is physically damaged, defective, or significantly different from the product description.</li>
-            <li>The item must be in its original condition, unused, with all original tags and packaging intact.</li>
-            <li>Damaged or missing items must be reported within <strong>48 hours</strong> of delivery along with photographic or video proof.</li>
+            <li><strong>Dispatch Time:</strong> Orders are verified and dispatched within <strong>1 to 2 business days</strong> from the date of payment confirmation.</li>
+            <li><strong>Courier Partners:</strong> Physical orders are shipped through registered domestic courier companies (e.g., Delhivery, BlueDart, DTDC) and/or Speed Post only.</li>
+            <li><strong>Estimated Delivery Timeline:</strong> Standard delivery time across India is <strong>3 to 7 business days</strong> depending on the destination pincode and regional logistics conditions.</li>
+            <li><strong>Tracking:</strong> Once dispatched, a live courier tracking number and link are sent via SMS / Email to the customer.</li>
           </ul>
 
-          <h2 style={{ fontSize: '1.3rem', fontWeight: 800, marginTop: '20px', color: '#000' }}>3. Refund Process & Timelines</h2>
-          <p>Once your return or cancellation request is received and approved by our support team:</p>
-          <ul style={{ paddingLeft: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            <li><strong>Approval Time:</strong> Verification and approval are completed within <strong>24 to 48 hours</strong>.</li>
-            <li><strong>Refund Settlement:</strong> Approved refunds are credited back to the original payment source (UPI ID, Debit/Credit Card, or Net Banking) via our payment gateway partner (Cashfree Payments).</li>
-            <li><strong>Refund Credit Time:</strong> It typically takes <strong>5 to 7 business days</strong> for the refunded amount to reflect in your bank account, depending on your issuing bank.</li>
-          </ul>
+          <h2 style={{ fontSize: '1.3rem', fontWeight: 800, marginTop: '20px', color: '#000' }}>3. Shipping Charges & Taxes</h2>
+          <p>Shipping charges (if any) are clearly displayed during checkout prior to payment initiation. Standard digital delivery is free of shipping charges.</p>
 
-          <h2 style={{ fontSize: '1.3rem', fontWeight: 800, marginTop: '20px', color: '#000' }}>4. Contact for Refunds & Disputes</h2>
-          <p>For any refund requests, billing queries, or order issues, please reach out to our dedicated support desk:</p>
+          <h2 style={{ fontSize: '1.3rem', fontWeight: 800, marginTop: '20px', color: '#000' }}>4. Delivery Address & Issues</h2>
+          <p>Delivery will be made to the shipping address specified by the buyer at the time of purchase. Platform Owner shall not be liable for delivery delays caused by incorrect addresses or force majeure events. If your package is delayed, damaged in transit, or undelivered, please contact our support desk immediately.</p>
+
+          <h2 style={{ fontSize: '1.3rem', fontWeight: 800, marginTop: '20px', color: '#000' }}>5. Shipping Support & Escalations</h2>
+          <p>For any questions regarding order delivery or tracking status, please contact us at:</p>
           
           <div style={{ background: '#f8fafc', padding: '20px', borderRadius: '14px', border: '1px solid #e2e8f0', fontSize: '0.9rem', lineHeight: 1.7 }}>
             <strong>Legal Name:</strong> PANDI GANESH BABU<br />
             <strong>Brand / Trade Name:</strong> ProfitupX<br />
             <strong>Support Email:</strong> ganeshdon5555@gmail.com<br />
-            <strong>Support Helpline:</strong> +91 8098824262<br />
-            <strong>Registered Address:</strong> KPT Nagar, Ayyampalayam, Dindigul, Tamil Nadu - 624601, India<br />
-            <strong>Support Desk Hours:</strong> Monday – Saturday (9:00 AM to 6:00 PM IST)
+            <strong>Helpline / Phone:</strong> +91 8098824262<br />
+            <strong>Operating Address:</strong> KPT Nagar, Ayyampalayam, Dindigul, Tamil Nadu - 624601, India<br />
+            <strong>Operating Hours:</strong> Monday – Saturday (9:00 AM to 6:00 PM IST)
           </div>
         </div>
       </div>

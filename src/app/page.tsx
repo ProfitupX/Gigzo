@@ -324,10 +324,12 @@ export default function Home() {
   }, []);
 
   const navLinks = [
-    { label: 'How It Works', href: '#how-it-works' },
-    { label: 'Features', href: '#features' },
-    { label: 'FAQ', href: '#faq' },
-    { label: 'Mobile App', href: '#mobile-app' },
+    { label: 'How It Works', href: '/#how-it-works' },
+    { label: 'Features', href: '/#features' },
+    { label: 'Pricing', href: '/pricing' },
+    { label: 'About', href: '/about' },
+    { label: 'Contact', href: '/contact' },
+    { label: 'FAQ', href: '/#faq' },
   ];
 
   const painPoints = [
@@ -1695,15 +1697,16 @@ export default function Home() {
                 { label: 'Sign Up Free', href: '/auth/login' }
               ]},
               { title: 'Company', links: [
-                { label: 'About ProfitupX', href: 'https://profitupx.com' },
-                { label: 'Blog (Coming Soon)', href: '/blog' },
-                { label: 'Careers (Coming Soon)', href: '/careers' },
+                { label: 'About ProfitupX', href: '/about' },
+                { label: 'Pricing Plans', href: '/pricing' },
                 { label: 'Contact Us', href: '/contact' }
               ]},
-              { title: 'Legal', links: [
+              { title: 'Legal & Policies', links: [
                 { label: 'Privacy Policy', href: '/privacy' },
-                { label: 'Terms of Service', href: '/terms' },
-                { label: 'Refund Policy', href: '/refund' }
+                { label: 'Terms & Conditions', href: '/terms' },
+                { label: 'Refund & Cancellation', href: '/refund' },
+                { label: 'Shipping & Delivery Policy', href: '/shipping' },
+                { label: 'Merchant Contact Info', href: '/contact' }
               ]},
             ].map(col => (
               <div key={col.title}>
@@ -1722,6 +1725,29 @@ export default function Home() {
             ))}
           </div>
 
+          {/* Legal Merchant Notice for Cashfree KYC Compliance */}
+          <div style={{
+            background: 'rgba(255,255,255,0.03)',
+            border: '1px solid rgba(255,255,255,0.1)',
+            borderRadius: '16px',
+            padding: '20px 24px',
+            marginBottom: '32px',
+            fontSize: '0.84rem',
+            color: 'rgba(255,255,255,0.85)',
+            lineHeight: 1.6
+          }}>
+            <div style={{ fontWeight: 800, color: '#38bdf8', marginBottom: '8px', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span>🛡️ Merchant & Legal Entity Information (Cashfree & Regulatory Compliance)</span>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '10px' }}>
+              <div><strong style={{ color: '#fff' }}>Legal Entity Name:</strong> PANDI GANESH BABU</div>
+              <div><strong style={{ color: '#fff' }}>Brand / Trade Name:</strong> ProfitupX</div>
+              <div><strong style={{ color: '#fff' }}>Official Email:</strong> <a href="mailto:ganeshdon5555@gmail.com" style={{ color: '#38bdf8', textDecoration: 'none' }}>ganeshdon5555@gmail.com</a></div>
+              <div><strong style={{ color: '#fff' }}>Helpline / Phone:</strong> <a href="tel:+918098824262" style={{ color: '#38bdf8', textDecoration: 'none' }}>+91 8098824262</a></div>
+              <div style={{ gridColumn: '1 / -1' }}><strong style={{ color: '#fff' }}>Registered Address:</strong> KPT Nagar, Ayyampalayam, Dindigul, Tamil Nadu - 624601, India</div>
+            </div>
+          </div>
+
           <div style={{
             borderTop: '1px solid rgba(255,255,255,0.08)',
             paddingTop: '24px',
@@ -1731,7 +1757,7 @@ export default function Home() {
             flexWrap: 'wrap',
             gap: '16px',
           }}>
-            <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.7)', display: 'flex', alignItems: 'center', gap: '4px' }}>© 2026 ProfitupX. Made with <Heart size={14} className="text-red-500" fill="currentColor" /> in India</p>
+            <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.7)', display: 'flex', alignItems: 'center', gap: '4px' }}>© 2026 ProfitupX. Operated by PANDI GANESH BABU. Made with <Heart size={14} className="text-red-500" fill="currentColor" /> in India</p>
             <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.7)' }}>Empowering creators to monetize their passion.</p>
           </div>
         </div>
