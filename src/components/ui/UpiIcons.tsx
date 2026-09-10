@@ -81,6 +81,20 @@ export function BhimUpiLogo({ size = 32 }: { size?: number }) {
   );
 }
 
+export function CredLogo({ size = 32 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="48" height="48" rx="12" fill="#0A0A0A" />
+      {/* CRED Minimalist Geometric Mask Logo */}
+      <path
+        d="M14 14H34V34H14V14ZM18 18V30H30V18H18Z"
+        fill="#FFFFFF"
+      />
+      <circle cx="24" cy="24" r="3" fill="#FFFFFF" />
+    </svg>
+  );
+}
+
 export function UpiBadge() {
   return (
     <div style={{

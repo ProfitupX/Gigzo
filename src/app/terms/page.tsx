@@ -1,5 +1,4 @@
-import Link from 'next/link';
-import { ArrowLeft, ShieldCheck, Mail, Phone, MapPin, Building } from 'lucide-react';
+import HeaderNav from '@/components/HeaderNav';
 
 export const metadata = {
   title: 'Terms & Conditions | ProfitupX',
@@ -9,26 +8,10 @@ export const metadata = {
 export default function TermsPage() {
   return (
     <div style={{ backgroundColor: '#fff', minHeight: '100vh', color: '#111', fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-      {/* Top Header Nav */}
-      <header style={{ borderBottom: '1px solid #eaeaea', padding: '16px 24px', backgroundColor: '#fafafa' }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
-            <img src="/icon.png" alt="ProfitupX" style={{ width: '28px', height: '28px', borderRadius: '6px' }} />
-            <span style={{ fontWeight: 900, fontSize: '1.2rem', color: '#000', letterSpacing: '-0.5px' }}>ProfitupX</span>
-          </Link>
-          <div style={{ display: 'flex', gap: '20px', fontSize: '0.88rem', fontWeight: 600 }}>
-            <Link href="/" style={{ color: '#555', textDecoration: 'none' }}>Home</Link>
-            <Link href="/about" style={{ color: '#555', textDecoration: 'none' }}>About</Link>
-            <Link href="/pricing" style={{ color: '#555', textDecoration: 'none' }}>Pricing</Link>
-            <Link href="/contact" style={{ color: '#555', textDecoration: 'none' }}>Contact</Link>
-          </div>
-        </div>
-      </header>
+      {/* Universal Website Navbar */}
+      <HeaderNav />
 
       <div style={{ maxWidth: '850px', margin: '0 auto', padding: '50px 24px 80px' }}>
-        <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: '#666', textDecoration: 'none', marginBottom: '32px', fontWeight: 600, fontSize: '0.9rem' }}>
-          <ArrowLeft size={16} /> Back to Home
-        </Link>
         
         <h1 style={{ fontSize: '2.4rem', fontWeight: 900, letterSpacing: '-0.04em', marginBottom: '16px', color: '#000' }}>Terms & Conditions</h1>
         <p style={{ color: '#666', fontSize: '0.95rem', marginBottom: '32px' }}>Last updated: September 10, 2026</p>

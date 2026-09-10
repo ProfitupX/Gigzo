@@ -20,7 +20,7 @@ import {
   Layers,
   Sparkles
 } from 'lucide-react';
-import { GooglePayLogo, PhonePeLogo, PaytmLogo, BhimUpiLogo, UpiBadge } from '@/components/ui/UpiIcons';
+import { GooglePayLogo, PhonePeLogo, PaytmLogo, BhimUpiLogo, CredLogo, UpiBadge } from '@/components/ui/UpiIcons';
 import { calculateMilestoneSchedule } from '@/lib/escrowLedger';
 
 interface CheckoutModalProps {
@@ -68,8 +68,58 @@ export default function CheckoutModal({
     : totalPrice;
 
   const adminUpiId = process.env.NEXT_PUBLIC_ADMIN_UPI_ID || '8015078755@ptsbi';
-  const upiPayUrl = `upi://pay?pa=${adminUpiId}&pn=ProfitupX&am=${payableAmount}&tn=Order-${orderId || 'STORE'}&cu=INR`;
+  const rawNote = `Order-${orderId || 'STORE'}`;
+  const upiPayUrl = `upi://pay?pa=${adminUpiId}&pn=ProfitupX&am=${payableAmount}&tn=${encodeURIComponent(rawNote)}&cu=INR`;
   const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=260x260&margin=8&data=${encodeURIComponent(upiPayUrl)}`;
+
+  const getAppUpiUrl = (app: 'gpay' | 'phonepe' | 'paytm' | 'cred' | 'bhim') => {
+    const commonParams = `pa=${encodeURIComponent(adminUpiId)}&pn=${encodeURIComponent('ProfitupX')}&am=${encodeURIComponent(payableAmount.toString())}&tn=${encodeURIComponent(rawNote)}&cu=INR`;
+    
+    if (typeof navigator === 'undefined') return `upi://pay?${commonParams}`;
+
+    const ua = navigator.userAgent || '';
+    const isAndroid = /android/i.test(ua);
+    const isIOS = /iphone|ipad|ipod/i.test(ua);
+
+    switch (app) {
+      case 'gpay':
+        if (isAndroid) {
+          return `intent://pay?${commonParams}#Intent;scheme=upi;package=com.google.android.apps.nbu.paisa.user;end;`;
+        }
+        if (isIOS) {
+          return `gpay://upi/pay?${commonParams}`;
+        }
+        return `tez://upi/pay?${commonParams}`;
+
+      case 'phonepe':
+        if (isAndroid) {
+          return `intent://pay?${commonParams}#Intent;scheme=upi;package=com.phonepe.app;end;`;
+        }
+        return `phonepe://pay?${commonParams}`;
+
+      case 'paytm':
+        if (isAndroid) {
+          return `intent://pay?${commonParams}#Intent;scheme=upi;package=net.one97.paytm;end;`;
+        }
+        return `paytmmp://pay?${commonParams}`;
+
+      case 'cred':
+        if (isAndroid) {
+          return `intent://pay?${commonParams}#Intent;scheme=upi;package=com.dreamplug.androidapp;end;`;
+        }
+        return `credpay://upi/pay?${commonParams}`;
+
+      case 'bhim':
+      default:
+        return `upi://pay?${commonParams}`;
+    }
+  };
+
+  const handleAppPay = (app: 'gpay' | 'phonepe' | 'paytm' | 'cred' | 'bhim', e: React.MouseEvent) => {
+    e.preventDefault();
+    const targetUrl = getAppUpiUrl(app);
+    window.location.href = targetUrl;
+  };
 
   const handleProceedToPayment = (e: React.FormEvent) => {
     e.preventDefault();
@@ -388,7 +438,8 @@ export default function CheckoutModal({
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
                     {/* Google Pay */}
                     <a 
-                      href={upiPayUrl}
+                      href={getAppUpiUrl('gpay')}
+                      onClick={(e) => handleAppPay('gpay', e)}
                       className="upi-app-card"
                       style={{
                         padding: '12px 14px',
@@ -400,19 +451,21 @@ export default function CheckoutModal({
                         alignItems: 'center',
                         gap: '12px',
                         transition: 'all 0.2s ease',
-                        boxShadow: '0 2px 6px rgba(0,0,0,0.03)'
+                        boxShadow: '0 2px 6px rgba(0,0,0,0.03)',
+                        cursor: 'pointer'
                       }}
                     >
                       <GooglePayLogo size={36} />
                       <div style={{ textAlign: 'left' }}>
                         <div style={{ fontWeight: 800, fontSize: '0.85rem', color: '#0f172a' }}>Google Pay</div>
-                        <div style={{ fontSize: '0.68rem', color: '#16a34a', fontWeight: 700 }}>⚡ 1-Tap Pay</div>
+                        <div style={{ fontSize: '0.68rem', color: '#16a34a', fontWeight: 700 }}>⚡ 1-Tap GPay</div>
                       </div>
                     </a>
 
                     {/* PhonePe */}
                     <a 
-                      href={upiPayUrl}
+                      href={getAppUpiUrl('phonepe')}
+                      onClick={(e) => handleAppPay('phonepe', e)}
                       className="upi-app-card"
                       style={{
                         padding: '12px 14px',
@@ -424,19 +477,21 @@ export default function CheckoutModal({
                         alignItems: 'center',
                         gap: '12px',
                         transition: 'all 0.2s ease',
-                        boxShadow: '0 2px 6px rgba(0,0,0,0.03)'
+                        boxShadow: '0 2px 6px rgba(0,0,0,0.03)',
+                        cursor: 'pointer'
                       }}
                     >
                       <PhonePeLogo size={36} />
                       <div style={{ textAlign: 'left' }}>
                         <div style={{ fontWeight: 800, fontSize: '0.85rem', color: '#0f172a' }}>PhonePe</div>
-                        <div style={{ fontSize: '0.68rem', color: '#16a34a', fontWeight: 700 }}>⚡ 1-Tap Pay</div>
+                        <div style={{ fontSize: '0.68rem', color: '#16a34a', fontWeight: 700 }}>⚡ 1-Tap PhonePe</div>
                       </div>
                     </a>
 
                     {/* Paytm */}
                     <a 
-                      href={upiPayUrl}
+                      href={getAppUpiUrl('paytm')}
+                      onClick={(e) => handleAppPay('paytm', e)}
                       className="upi-app-card"
                       style={{
                         padding: '12px 14px',
@@ -448,19 +503,21 @@ export default function CheckoutModal({
                         alignItems: 'center',
                         gap: '12px',
                         transition: 'all 0.2s ease',
-                        boxShadow: '0 2px 6px rgba(0,0,0,0.03)'
+                        boxShadow: '0 2px 6px rgba(0,0,0,0.03)',
+                        cursor: 'pointer'
                       }}
                     >
                       <PaytmLogo size={36} />
                       <div style={{ textAlign: 'left' }}>
                         <div style={{ fontWeight: 800, fontSize: '0.85rem', color: '#0f172a' }}>Paytm</div>
-                        <div style={{ fontSize: '0.68rem', color: '#16a34a', fontWeight: 700 }}>⚡ 1-Tap Pay</div>
+                        <div style={{ fontSize: '0.68rem', color: '#16a34a', fontWeight: 700 }}>⚡ 1-Tap Paytm</div>
                       </div>
                     </a>
 
-                    {/* BHIM / Other UPI */}
+                    {/* CRED */}
                     <a 
-                      href={upiPayUrl}
+                      href={getAppUpiUrl('cred')}
+                      onClick={(e) => handleAppPay('cred', e)}
                       className="upi-app-card"
                       style={{
                         padding: '12px 14px',
@@ -472,16 +529,48 @@ export default function CheckoutModal({
                         alignItems: 'center',
                         gap: '12px',
                         transition: 'all 0.2s ease',
-                        boxShadow: '0 2px 6px rgba(0,0,0,0.03)'
+                        boxShadow: '0 2px 6px rgba(0,0,0,0.03)',
+                        cursor: 'pointer'
                       }}
                     >
-                      <BhimUpiLogo size={36} />
+                      <CredLogo size={36} />
                       <div style={{ textAlign: 'left' }}>
-                        <div style={{ fontWeight: 800, fontSize: '0.85rem', color: '#0f172a' }}>Any UPI App</div>
-                        <div style={{ fontSize: '0.68rem', color: '#16a34a', fontWeight: 700 }}>⚡ BHIM / Cred</div>
+                        <div style={{ fontWeight: 800, fontSize: '0.85rem', color: '#0f172a' }}>CRED UPI</div>
+                        <div style={{ fontSize: '0.68rem', color: '#16a34a', fontWeight: 700 }}>⚡ 1-Tap CRED</div>
                       </div>
                     </a>
                   </div>
+
+                  {/* Any UPI / BHIM Chooser Bar */}
+                  <a 
+                    href={getAppUpiUrl('bhim')}
+                    onClick={(e) => handleAppPay('bhim', e)}
+                    className="upi-app-card"
+                    style={{
+                      padding: '12px 16px',
+                      backgroundColor: '#f8fafc',
+                      border: '1.5px dashed #cbd5e1',
+                      borderRadius: '16px',
+                      textDecoration: 'none',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      transition: 'all 0.2s ease',
+                      cursor: 'pointer',
+                      marginTop: '2px'
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <BhimUpiLogo size={32} />
+                      <div style={{ textAlign: 'left' }}>
+                        <div style={{ fontWeight: 800, fontSize: '0.86rem', color: '#0f172a' }}>Other UPI Apps / BHIM</div>
+                        <div style={{ fontSize: '0.68rem', color: '#64748b' }}>Amazon Pay, Navi, Bank UPI apps</div>
+                      </div>
+                    </div>
+                    <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#0f172a', backgroundColor: '#e2e8f0', padding: '4px 10px', borderRadius: '100px' }}>
+                      Choose App →
+                    </span>
+                  </a>
                 </div>
               )}
 

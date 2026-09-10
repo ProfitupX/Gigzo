@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Mail, Phone, MapPin, Building, ShieldCheck, Send, CheckCircle2, Clock } from 'lucide-react';
 
+import HeaderNav from '@/components/HeaderNav';
+
 export default function ContactPage() {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
@@ -16,27 +18,10 @@ export default function ContactPage() {
 
   return (
     <div style={{ backgroundColor: '#fff', minHeight: '100vh', color: '#111', fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-      {/* Top Header Nav */}
-      <header style={{ borderBottom: '1px solid #eaeaea', padding: '16px 24px', backgroundColor: '#fafafa' }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
-            <img src="/icon.png" alt="ProfitupX" style={{ width: '28px', height: '28px', borderRadius: '6px' }} />
-            <span style={{ fontWeight: 900, fontSize: '1.2rem', color: '#000', letterSpacing: '-0.5px' }}>ProfitupX</span>
-          </Link>
-          <div style={{ display: 'flex', gap: '20px', fontSize: '0.88rem', fontWeight: 600 }}>
-            <Link href="/" style={{ color: '#555', textDecoration: 'none' }}>Home</Link>
-            <Link href="/about" style={{ color: '#555', textDecoration: 'none' }}>About</Link>
-            <Link href="/pricing" style={{ color: '#555', textDecoration: 'none' }}>Pricing</Link>
-            <Link href="/contact" style={{ color: '#000', fontWeight: 800, textDecoration: 'none' }}>Contact</Link>
-          </div>
-        </div>
-      </header>
+      {/* Universal Website Navbar */}
+      <HeaderNav activePage="Contact" />
 
       <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '50px 24px 80px' }}>
-        <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: '#666', textDecoration: 'none', marginBottom: '32px', fontWeight: 600, fontSize: '0.9rem' }}>
-          <ArrowLeft size={16} /> Back to Home
-        </Link>
-        
         <div style={{ marginBottom: '40px' }}>
           <span style={{ display: 'inline-block', padding: '4px 12px', borderRadius: '100px', background: '#e0f2fe', color: '#0369a1', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '12px' }}>
             Official Support & Office
