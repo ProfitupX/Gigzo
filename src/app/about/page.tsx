@@ -1,4 +1,5 @@
 import HeaderNav from '@/components/HeaderNav';
+import { ShieldCheck } from 'lucide-react';
 
 export const metadata = {
   title: 'About Us | ProfitupX',
